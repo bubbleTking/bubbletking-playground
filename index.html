@@ -1128,6 +1128,137 @@ nav a {
   text-decoration: none;
 }
 
+.learning-feature {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(360px, 0.7fr);
+  min-height: 610px;
+  border: 1px solid var(--ink);
+  border-top: 0;
+  background: #030816;
+  color: var(--white);
+}
+
+.learning-visual {
+  position: relative;
+  min-width: 0;
+  display: grid;
+  align-content: center;
+  overflow: hidden;
+  border-right: 1px solid #223747;
+  background: #030816;
+  color: var(--white);
+  text-decoration: none;
+}
+
+.learning-visual::after {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(3, 8, 22, 0.1), rgba(3, 8, 22, 0.5)),
+    linear-gradient(90deg, rgba(3, 8, 22, 0.52), transparent 50%);
+  content: "";
+}
+
+.learning-visual img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  transition: opacity 180ms ease;
+}
+
+.learning-feature:hover .learning-visual img {
+  opacity: 0.9;
+}
+
+.learning-brand {
+  position: absolute;
+  z-index: 1;
+  top: 24px;
+  left: 24px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.learning-brand b {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  border-radius: 7px;
+  background: #5ed9f2;
+  color: #031019;
+  font-size: 11px;
+}
+
+.learning-brand strong {
+  font-size: 14px;
+}
+
+.learning-index {
+  position: absolute;
+  z-index: 1;
+  right: 22px;
+  bottom: 20px;
+  padding: 7px 9px;
+  background: #f97316;
+  color: #07111c;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.learning-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 48px;
+}
+
+.learning-meta {
+  color: #9eb5c5;
+}
+
+.learning-meta .status-dot {
+  background: #5ed9f2;
+  box-shadow: 0 0 0 4px rgba(94, 217, 242, 0.16);
+}
+
+.learning-course {
+  margin: 38px 0 10px;
+  color: #f97316;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.learning-copy h3 {
+  margin: 0 0 26px;
+  font-family: "Arial Narrow", "Helvetica Neue", sans-serif;
+  font-size: 62px;
+  font-weight: 800;
+  line-height: 0.86;
+  text-transform: uppercase;
+}
+
+.learning-copy > p:not(.learning-course) {
+  margin: 0 0 28px;
+  color: #c4d2dc;
+  font-size: 16px;
+  line-height: 1.58;
+}
+
+.learning-action {
+  background: #5ed9f2;
+  text-decoration: none;
+}
+
+.learning-copy .feature-list li {
+  border-color: #304657;
+  color: #b8c8d4;
+}
+
 .future-shelf {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1469,7 +1600,8 @@ output {
   .project-feature,
   .demo-stage,
   .presence-feature,
-  .excel-feature {
+  .excel-feature,
+  .learning-feature {
     grid-template-columns: 1fr;
   }
 
@@ -1493,6 +1625,12 @@ output {
     min-height: 520px;
     border-top: 1px solid var(--ink);
     border-left: 0;
+  }
+
+  .learning-visual {
+    min-height: 520px;
+    border-right: 0;
+    border-bottom: 1px solid #223747;
   }
 
   .about {
@@ -1530,6 +1668,18 @@ output {
 
   .excel-copy {
     padding: 42px 24px;
+  }
+
+  .learning-copy {
+    padding: 42px 24px;
+  }
+
+  .learning-copy h3 {
+    font-size: 52px;
+  }
+
+  .learning-visual {
+    min-height: 360px;
   }
 
   .small-project-grid {
@@ -1741,7 +1891,7 @@ output {
             <p class="kicker" data-i18n="shelf.kicker">Shelf 01</p>
             <h2 id="shelf-title" data-i18n="shelf.title">Things you can try</h2>
           </div>
-          <span class="count" data-i18n="shelf.count">05 live projects</span>
+          <span class="count" data-i18n="shelf.count">06 live projects</span>
         </div>
 
         <article class="project-feature">
@@ -1802,6 +1952,113 @@ output {
           </button>
         </article>
 
+        <div class="small-project-grid">
+        <article class="status-watch-feature small-project">
+          <div class="status-watch-visual" aria-hidden="true">
+            <span class="browser-frame">
+              <span class="browser-bar">
+                <i></i><i></i><i></i>
+                <b>AI Status Watch</b>
+              </span>
+              <span class="extension-popup">
+                <span class="extension-heading">
+                  <strong>AI Status</strong>
+                  <small>REFRESH</small>
+                </span>
+                <span class="service-status">
+                  <b>OpenAI</b><em>OK</em><small>Recovered</small>
+                </span>
+                <span class="service-status">
+                  <b>Claude</b><em>OK</em><small>Recovered</small>
+                </span>
+                <span class="service-status has-incident">
+                  <b>DeepSeek</b><em>ERROR</em><small>Model: R1 · investigating</small>
+                </span>
+                <span class="last-check">Last checked just now</span>
+              </span>
+            </span>
+            <span class="status-alert">
+              <i></i>
+              <span>DeepSeek: error<br /><small>Model R1 · investigating</small></span>
+              <b>×</b>
+            </span>
+          </div>
+
+          <div class="status-watch-copy">
+            <div class="project-meta">
+              <span class="status-dot"></span>
+              <span data-i18n="status.meta">Chrome extension · local monitoring</span>
+              <time datetime="2026-07-30" data-i18n="status.date">Created 30 Jul 2026</time>
+            </div>
+            <span class="status-index">02 / UTILITY</span>
+            <h3>AI Status<br />Watch</h3>
+            <p data-i18n="status.copy">
+              Keep an eye on OpenAI, Claude, and DeepSeek without repeatedly
+              checking status pages. Get a quiet browser alert when an incident
+              changes.
+            </p>
+            <div class="project-actions">
+              <a
+                class="primary-action status-action"
+                href="https://github.com/bubbleTking/ai-status-watch"
+                target="_blank"
+                rel="noreferrer"
+              ><span aria-hidden="true">↗</span> <span data-i18n="actions.getExtension">Get extension</span></a>
+              <a
+                class="secondary-action status-source"
+                href="https://github.com/bubbleTking/ai-status-watch"
+                target="_blank"
+                rel="noreferrer"
+              ><span data-i18n="actions.viewSource">View source ↗</span></a>
+            </div>
+            <ul class="feature-list" aria-label="AI Status Watch features">
+              <li data-i18n="status.feature1">OpenAI, Claude & DeepSeek</li>
+              <li data-i18n="status.feature2">2-minute checks</li>
+              <li data-i18n="status.feature3">Incident notifications</li>
+              <li data-i18n="status.feature4">No telemetry</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="tax-feature small-project">
+          <div class="tax-visual" aria-hidden="true">
+            <span class="tax-heading">Inheritance Tax</span>
+            <span class="tax-subheading">SUCCESSION IMPACT SIMULATOR</span>
+            <span class="tax-controls">
+              <span><small>TAX RATE</small><b>60%</b><i style="--value: 100%"></i></span>
+              <span><small>LIQUIDITY</small><b>5%</b><i style="--value: 13%"></i></span>
+              <span><small>STRUCTURE</small><b>Chaebol</b><i style="--value: 92%"></i></span>
+            </span>
+            <span class="tax-result">
+              <span><small>CONTROL BEFORE</small><b>96%</b></span>
+              <i>→</i>
+              <span><small>CONTROL AFTER</small><b>42%</b></span>
+            </span>
+          </div>
+          <div class="small-project-copy">
+            <div class="project-meta">
+              <span class="status-dot"></span>
+              <span data-i18n="tax.meta">Interactive finance concept</span>
+              <time datetime="2026-03-24" data-i18n="tax.date">Created 24 Mar 2026</time>
+            </div>
+            <span class="small-project-index">03 / SIMULATOR</span>
+            <h3 data-i18n="tax.title">Inheritance Tax Simulator</h3>
+            <p data-i18n="tax.copy">
+              Explore how tax rate, liquidity, ownership structure, and policy
+              relief can reshape family control during business succession.
+            </p>
+            <div class="project-actions">
+              <a
+                class="primary-action tax-action"
+                href="inheritance-tax-simulator.html"
+                target="_blank"
+                rel="noreferrer"
+              ><span aria-hidden="true">↗</span> <span data-i18n="actions.openSimulator">Open simulator</span></a>
+            </div>
+          </div>
+        </article>
+        </div>
+
         <article class="presence-feature">
           <a
             class="presence-art"
@@ -1816,7 +2073,7 @@ output {
               width="1904"
               height="1088"
             />
-            <span class="presence-index">02 / INTERACTIVE STORY</span>
+            <span class="presence-index">04 / INTERACTIVE STORY</span>
           </a>
           <div class="presence-copy">
             <div class="project-meta presence-meta">
@@ -1856,7 +2113,7 @@ output {
               <span data-i18n="excel.meta">Live web app · files stay in your browser</span>
               <time datetime="2026-05-14" data-i18n="excel.date">Created 14 May 2026</time>
             </div>
-            <span class="excel-index">03 / PRODUCTIVITY</span>
+            <span class="excel-index">05 / PRODUCTIVITY</span>
             <h3>Excel Diff<br />Studio</h3>
             <p data-i18n="excel.copy">
               Drop in two spreadsheets and see every changed cell, sheet, old
@@ -1925,120 +2182,64 @@ output {
           </a>
         </article>
 
-        <div class="small-project-grid">
-        <article class="status-watch-feature small-project">
-          <div class="status-watch-visual" aria-hidden="true">
-            <span class="browser-frame">
-              <span class="browser-bar">
-                <i></i><i></i><i></i>
-                <b>AI Status Watch</b>
-              </span>
-              <span class="extension-popup">
-                <span class="extension-heading">
-                  <strong>AI Status</strong>
-                  <small>REFRESH</small>
-                </span>
-                <span class="service-status">
-                  <b>OpenAI</b><em>OK</em><small>Recovered</small>
-                </span>
-                <span class="service-status">
-                  <b>Claude</b><em>OK</em><small>Recovered</small>
-                </span>
-                <span class="service-status has-incident">
-                  <b>DeepSeek</b><em>ERROR</em><small>Model: R1 · investigating</small>
-                </span>
-                <span class="last-check">Last checked just now</span>
-              </span>
+        <article class="learning-feature">
+          <a
+            class="learning-visual"
+            href="https://learningpacer.org/"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Open LearningPacer"
+          >
+            <img
+              src="https://learningpacer.org/hero-paused-wallpaper.png"
+              alt="LearningPacer computer networks learning platform"
+              width="1920"
+              height="1080"
+            />
+            <span class="learning-brand">
+              <b>LP</b>
+              <strong>LearningPacer</strong>
             </span>
-            <span class="status-alert">
-              <i></i>
-              <span>DeepSeek: error<br /><small>Model R1 · investigating</small></span>
-              <b>×</b>
-            </span>
-          </div>
-
-          <div class="status-watch-copy">
-            <div class="project-meta">
+            <span class="learning-index">06 / FYP</span>
+          </a>
+          <div class="learning-copy">
+            <div class="project-meta learning-meta">
               <span class="status-dot"></span>
-              <span data-i18n="status.meta">Chrome extension · local monitoring</span>
-              <time datetime="2026-07-30" data-i18n="status.date">Created 30 Jul 2026</time>
+              <span data-i18n="learning.meta">HKUST FYP · AI teaching assistant</span>
+              <time datetime="2025-09" data-i18n="learning.date">Started Sep 2025</time>
             </div>
-            <span class="status-index">04 / UTILITY</span>
-            <h3>AI Status<br />Watch</h3>
-            <p data-i18n="status.copy">
-              Keep an eye on OpenAI, Claude, and DeepSeek without repeatedly
-              checking status pages. Get a quiet browser alert when an incident
-              changes.
+            <p class="learning-course">ELEC3120 / COMPUTER NETWORKS</p>
+            <h3>Learning<br />Pacer</h3>
+            <p data-i18n="learning.copy">
+              A course-grounded AI learning platform for computer networks.
+              Students can ask cited questions, follow guided course material,
+              explore interactive simulations, compare answers, and practise
+              with mock exams.
             </p>
             <div class="project-actions">
               <a
-                class="primary-action status-action"
-                href="https://github.com/bubbleTking/ai-status-watch"
+                class="primary-action learning-action"
+                href="https://learningpacer.org/"
                 target="_blank"
                 rel="noreferrer"
-              ><span aria-hidden="true">↗</span> <span data-i18n="actions.getExtension">Get extension</span></a>
-              <a
-                class="secondary-action status-source"
-                href="https://github.com/bubbleTking/ai-status-watch"
-                target="_blank"
-                rel="noreferrer"
-              ><span data-i18n="actions.viewSource">View source ↗</span></a>
+              ><span aria-hidden="true">↗</span> <span data-i18n="actions.openLearning">Open LearningPacer</span></a>
             </div>
-            <ul class="feature-list" aria-label="AI Status Watch features">
-              <li data-i18n="status.feature1">OpenAI, Claude & DeepSeek</li>
-              <li data-i18n="status.feature2">2-minute checks</li>
-              <li data-i18n="status.feature3">Incident notifications</li>
-              <li data-i18n="status.feature4">No telemetry</li>
+            <ul class="feature-list" aria-label="LearningPacer features">
+              <li data-i18n="learning.feature1">Course-grounded AI chat</li>
+              <li data-i18n="learning.feature2">16 interactive labs</li>
+              <li data-i18n="learning.feature3">Mock exams</li>
+              <li data-i18n="learning.feature4">Answer comparison</li>
             </ul>
           </div>
         </article>
 
-        <article class="tax-feature small-project">
-          <div class="tax-visual" aria-hidden="true">
-            <span class="tax-heading">Inheritance Tax</span>
-            <span class="tax-subheading">SUCCESSION IMPACT SIMULATOR</span>
-            <span class="tax-controls">
-              <span><small>TAX RATE</small><b>60%</b><i style="--value: 100%"></i></span>
-              <span><small>LIQUIDITY</small><b>5%</b><i style="--value: 13%"></i></span>
-              <span><small>STRUCTURE</small><b>Chaebol</b><i style="--value: 92%"></i></span>
-            </span>
-            <span class="tax-result">
-              <span><small>CONTROL BEFORE</small><b>96%</b></span>
-              <i>→</i>
-              <span><small>CONTROL AFTER</small><b>42%</b></span>
-            </span>
-          </div>
-          <div class="small-project-copy">
-            <div class="project-meta">
-              <span class="status-dot"></span>
-              <span data-i18n="tax.meta">Interactive finance concept</span>
-              <time datetime="2026-03-24" data-i18n="tax.date">Created 24 Mar 2026</time>
-            </div>
-            <span class="small-project-index">05 / SIMULATOR</span>
-            <h3 data-i18n="tax.title">Inheritance Tax Simulator</h3>
-            <p data-i18n="tax.copy">
-              Explore how tax rate, liquidity, ownership structure, and policy
-              relief can reshape family control during business succession.
-            </p>
-            <div class="project-actions">
-              <a
-                class="primary-action tax-action"
-                href="inheritance-tax-simulator.html"
-                target="_blank"
-                rel="noreferrer"
-              ><span aria-hidden="true">↗</span> <span data-i18n="actions.openSimulator">Open simulator</span></a>
-            </div>
-          </div>
-        </article>
-        </div>
-
         <div class="future-shelf" aria-label="Future project slots">
           <div class="empty-slot">
-            <span>06</span>
+            <span>07</span>
             <p data-i18n="future.duolive">DuoLive concept</p>
           </div>
           <div class="empty-slot">
-            <span>07</span>
+            <span>08</span>
             <p data-i18n="future.next">Next useful thing</p>
           </div>
         </div>
@@ -2167,7 +2368,7 @@ output {
     "intro.open": "Open the shelf ↓",
     "shelf.kicker": "Shelf 01",
     "shelf.title": "Things you can try",
-    "shelf.count": "05 live projects",
+    "shelf.count": "06 live projects",
     "guardian.meta": "macOS alpha · local-first",
     "guardian.date": "Created 30 Jul 2026",
     "guardian.title": "Hearing<br />Guardian",
@@ -2182,6 +2383,7 @@ output {
     "actions.openWebApp": "Open web app",
     "actions.getExtension": "Get extension",
     "actions.openSimulator": "Open simulator",
+    "actions.openLearning": "Open LearningPacer",
     "preview.live": "LIVE PREVIEW",
     "preview.waiting": "Waiting for music",
     "preview.listening": "listening",
@@ -2211,6 +2413,13 @@ output {
     "tax.date": "Created 24 Mar 2026",
     "tax.title": "Inheritance Tax Simulator",
     "tax.copy": "Explore how tax rate, liquidity, ownership structure, and policy relief can reshape family control during business succession.",
+    "learning.meta": "HKUST FYP · AI teaching assistant",
+    "learning.date": "Started Sep 2025",
+    "learning.copy": "A course-grounded AI learning platform for computer networks. Students can ask cited questions, follow guided course material, explore interactive simulations, compare answers, and practise with mock exams.",
+    "learning.feature1": "Course-grounded AI chat",
+    "learning.feature2": "16 interactive labs",
+    "learning.feature3": "Mock exams",
+    "learning.feature4": "Answer comparison",
     "future.duolive": "DuoLive concept",
     "future.next": "Next useful thing",
     "about.kicker": "About this place",
@@ -2255,7 +2464,7 @@ output {
     "intro.open": "打开项目架 ↓",
     "shelf.kicker": "项目架 01",
     "shelf.title": "可以体验的作品",
-    "shelf.count": "05 个已发布项目",
+    "shelf.count": "06 个已发布项目",
     "guardian.meta": "macOS 测试版 · 本地优先",
     "guardian.date": "创建于 2026年7月30日",
     "guardian.title": "听力<br />守护者",
@@ -2270,6 +2479,7 @@ output {
     "actions.openWebApp": "打开网页应用",
     "actions.getExtension": "获取扩展",
     "actions.openSimulator": "打开模拟器",
+    "actions.openLearning": "打开 LearningPacer",
     "preview.live": "实时预览",
     "preview.waiting": "等待音乐播放",
     "preview.listening": "聆听时间",
@@ -2299,6 +2509,13 @@ output {
     "tax.date": "创建于 2026年3月24日",
     "tax.title": "遗产税影响模拟器",
     "tax.copy": "探索税率、流动性、所有权结构与政策减免，如何在企业传承过程中改变家族控制权。",
+    "learning.meta": "香港科技大学毕业项目 · AI 教学助手",
+    "learning.date": "始于 2025年9月",
+    "learning.copy": "面向计算机网络课程、以课程资料为依据的 AI 学习平台。学生可以提出带引用的问题、跟随课程内容学习、体验交互模拟、比较答案，并通过模拟考试练习。",
+    "learning.feature1": "基于课程的 AI 对话",
+    "learning.feature2": "16 个交互实验",
+    "learning.feature3": "模拟考试",
+    "learning.feature4": "答案对比",
     "future.duolive": "DuoLive 概念",
     "future.next": "下一个实用工具",
     "about.kicker": "关于这里",
