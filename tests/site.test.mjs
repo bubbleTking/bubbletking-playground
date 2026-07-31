@@ -10,6 +10,9 @@ test("renders the project shelf and interactive demo", async () => {
   assert.match(html, /Hearing Guardian/);
   assert.match(html, /In Presence/);
   assert.match(html, /Enter the case/);
+  assert.match(html, /Excel Diff Studio/);
+  assert.match(html, /https:\/\/excel-diff-studio\.netlify\.app\//);
+  assert.match(html, /Open web app/);
   assert.match(html, /Interactive demo/);
   assert.doesNotMatch(html, /__CSS__|__JS__/);
 });
