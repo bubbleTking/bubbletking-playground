@@ -1,0 +1,73 @@
+import { cp, mkdir, readFile, writeFile } from "node:fs/promises";
+import { resolve } from "node:path";
+import { renderSite } from "./site-source.mjs";
+
+const root = process.cwd();
+const dist = resolve(root, "dist");
+const server = resolve(dist, "server");
+const html = await renderSite(root);
+const ogPath = resolve(root, "public", "og.jpg");
+const presenceCoverPath = resolve(root, "public", "in-presence-cover.jpg");
+let ogBase64 = "";
+let presenceCoverBase64 = "";
+
+try {
+  ogBase64 = (await readFile(ogPath)).toString("base64");
+} catch {
+  ogBase64 = "";
+}
+
+try {
+  presenceCoverBase64 = (await readFile(presenceCoverPath)).toString("base64");
+} catch {
+  presenceCoverBase64 = "";
+}
+
+const worker = `
+const html = ${JSON.stringify(html)};
+const ogBase64 = ${JSON.stringify(ogBase64)};
+const presenceCoverBase64 = ${JSON.stringify(presenceCoverBase64)};
+const headers = {
+  "content-type": "text/html; charset=utf-8",
+  "cache-control": "public, max-age=300",
+  "x-content-type-options": "nosniff",
+  "referrer-policy": "strict-origin-when-cross-origin"
+};
+
+export default {
+  async fetch(request) {
+    const url = new URL(request.url);
+    if (url.pathname === "/og.jpg" && ogBase64) {
+      const bytes = Uint8Array.from(atob(ogBase64), c => c.charCodeAt(0));
+      return new Response(bytes, {
+        headers: {
+          "content-type": "image/jpeg",
+          "cache-control": "public, max-age=86400"
+        }
+      });
+    }
+    if (url.pathname === "/in-presence-cover.jpg" && presenceCoverBase64) {
+      const bytes = Uint8Array.from(atob(presenceCoverBase64), c => c.charCodeAt(0));
+      return new Response(bytes, {
+        headers: {
+          "content-type": "image/jpeg",
+          "cache-control": "public, max-age=86400"
+        }
+      });
+    }
+    if (url.pathname !== "/" && url.pathname !== "/index.html") {
+      return new Response("Not found", { status: 404 });
+    }
+    return new Response(html, { headers });
+  }
+};
+`;
+
+await mkdir(server, { recursive: true });
+await mkdir(resolve(dist, ".openai"), { recursive: true });
+await writeFile(resolve(server, "index.js"), worker.trimStart(), "utf8");
+await cp(
+  resolve(root, ".openai", "hosting.json"),
+  resolve(dist, ".openai", "hosting.json")
+);
+console.log("Built bubbleTking's Playground");
