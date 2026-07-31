@@ -1,4 +1,23 @@
-:root {
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f4f2ed" />
+    <title>bubbleTking's Playground</title>
+    <meta
+      name="description"
+      content="Small tools, playful experiments, and useful software by bubbleTking."
+    />
+    <meta property="og:title" content="bubbleTking's Playground" />
+    <meta
+      property="og:description"
+      content="A playable shelf of small tools and experiments."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/og.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <style>:root {
   --paper: #f4f2ed;
   --ink: #121212;
   --muted: #67645f;
@@ -1299,3 +1318,560 @@ output {
     transition: none !important;
   }
 }
+</style>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="identity" href="#top" aria-label="Back to the top">
+        <img
+          src="https://avatars.githubusercontent.com/u/168805496?v=4"
+          alt=""
+          width="42"
+          height="42"
+        />
+        <span>
+          <strong>bubbleTking</strong>
+          <small>makes things</small>
+        </span>
+      </a>
+      <nav aria-label="Main navigation">
+        <a href="#shelf">Projects</a>
+        <a href="#about">About</a>
+        <a
+          class="github-link"
+          href="https://github.com/bubbleTking"
+          target="_blank"
+          rel="noreferrer"
+        >GitHub ↗</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="intro" aria-labelledby="intro-title">
+        <p class="kicker">A tiny corner of the internet</p>
+        <h1 id="intro-title">Useful tools.<br /><span>Playable ideas.</span></h1>
+        <p class="intro-copy">
+          I build small software for annoyances, curiosities, and habits worth
+          changing. Everything on this shelf is meant to be opened.
+        </p>
+        <a class="down-link" href="#shelf">Open the shelf ↓</a>
+      </section>
+
+      <section class="shelf-section" id="shelf" aria-labelledby="shelf-title">
+        <div class="section-heading">
+          <div>
+            <p class="kicker">Shelf 01</p>
+            <h2 id="shelf-title">Things you can try</h2>
+          </div>
+          <span class="count">02 live experiments</span>
+        </div>
+
+        <article class="project-feature">
+          <div class="project-copy">
+            <div class="project-meta">
+              <span class="status-dot"></span>
+              <span>macOS alpha · local-first</span>
+            </div>
+            <h3>Hearing<br />Guardian</h3>
+            <p>
+              A quiet menu-bar companion that counts real headphone listening
+              time, schedules breaks, and keeps every bit of data on your Mac.
+            </p>
+            <div class="project-actions">
+              <button class="primary-action" id="try-demo" type="button">
+                <span aria-hidden="true">▶</span> Try the demo
+              </button>
+              <a
+                class="secondary-action"
+                href="https://github.com/bubbleTking/hearing-guardian"
+                target="_blank"
+                rel="noreferrer"
+              >View source ↗</a>
+            </div>
+            <ul class="feature-list" aria-label="Project features">
+              <li>Actual playback time</li>
+              <li>Automatic breaks</li>
+              <li>Volume reminders</li>
+              <li>No accounts or cloud</li>
+            </ul>
+          </div>
+
+          <button
+            class="project-visual"
+            id="visual-demo"
+            type="button"
+            aria-label="Open the Hearing Guardian interactive demo"
+          >
+            <span class="visual-label">LIVE PREVIEW</span>
+            <span class="mac-window">
+              <span class="window-bar">
+                <i></i><i></i><i></i>
+                <b>Hearing Guardian</b>
+              </span>
+              <span class="window-content">
+                <span class="ear-mark">◖))</span>
+                <strong>Waiting for music</strong>
+                <small>AirPods Pro · Spotify</small>
+                <span class="progress-track"><i></i></span>
+                <span class="window-stats">
+                  <span><b>00:00</b><small>listening</small></span>
+                  <span><b>62%</b><small>volume</small></span>
+                </span>
+              </span>
+            </span>
+            <span class="visual-hint">Click to play with it</span>
+          </button>
+        </article>
+
+        <article class="presence-feature">
+          <div class="presence-art">
+            <img
+              src="/in-presence-cover.jpg"
+              alt="In Presence, an interactive mystery set aboard a mountain train"
+              width="1904"
+              height="1088"
+            />
+            <span class="presence-index">02 / INTERACTIVE STORY</span>
+          </div>
+          <div class="presence-copy">
+            <div class="project-meta presence-meta">
+              <span class="status-dot"></span>
+              <span>Playable concept · AI-native long video</span>
+            </div>
+            <p class="presence-cn" lang="zh-CN">在场</p>
+            <h3>In Presence</h3>
+            <p>
+              An interactive murder mystery aboard a snowbound train. Watch six
+              episodes, collect evidence, interrogate suspects, connect clues,
+              and decide whose story survives.
+            </p>
+            <div class="project-actions">
+              <button class="primary-action presence-action" id="try-presence" type="button">
+                <span aria-hidden="true">⌕</span> Enter the case
+              </button>
+              <span class="project-note">Case preview · no sign-in</span>
+            </div>
+            <ul class="feature-list" aria-label="In Presence features">
+              <li>6 story episodes</li>
+              <li>Clue combinations</li>
+              <li>Suspect interviews</li>
+              <li>Multiple perspectives</li>
+            </ul>
+          </div>
+        </article>
+
+        <div class="future-shelf" aria-label="Future project slots">
+          <div class="empty-slot">
+            <span>03</span>
+            <p>Excel Diff Studio</p>
+          </div>
+          <div class="empty-slot">
+            <span>04</span>
+            <p>DuoLive concept</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="about" id="about" aria-labelledby="about-title">
+        <p class="kicker">About this place</p>
+        <div>
+          <h2 id="about-title">Built to be used,<br />not just scrolled past.</h2>
+          <p>
+            This is my public workbench: part app store, part playground. Each
+            project starts with a real problem and stays small enough to remain
+            understandable.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>© 2026 bubbleTking</span>
+      <span>Small software, made in public.</span>
+    </footer>
+
+    <dialog class="demo-dialog" id="demo-dialog">
+      <div class="demo-shell">
+        <header class="demo-header">
+          <div>
+            <p class="kicker">Interactive demo</p>
+            <h2>Hearing Guardian</h2>
+          </div>
+          <button class="icon-button" id="close-demo" type="button" aria-label="Close demo" title="Close">
+            ×
+          </button>
+        </header>
+
+        <div class="demo-stage">
+          <section class="guardian-panel" aria-live="polite">
+            <div class="guardian-state">
+              <span class="demo-ear" aria-hidden="true">◖))</span>
+              <div>
+                <small id="demo-device">Headphones connected</small>
+                <h3 id="demo-state">Ready to listen</h3>
+              </div>
+            </div>
+
+            <div class="timer-ring" id="timer-ring">
+              <div>
+                <strong id="demo-timer">00:00</strong>
+                <span id="demo-timer-label">until break</span>
+              </div>
+            </div>
+
+            <div class="demo-facts">
+              <span><small>Player</small><strong id="demo-player">Paused</strong></span>
+              <span><small>Output</small><strong id="demo-volume-readout">62%</strong></span>
+              <span><small>Mode</small><strong id="demo-mode">Listening</strong></span>
+            </div>
+          </section>
+
+          <aside class="demo-controls">
+            <div class="control-block">
+              <label for="volume-slider">Output volume</label>
+              <div class="slider-row">
+                <input id="volume-slider" type="range" min="0" max="100" value="62" />
+                <output id="volume-output" for="volume-slider">62%</output>
+              </div>
+              <p class="volume-warning" id="volume-warning" hidden>
+                That is a loud setting for a long session.
+              </p>
+            </div>
+
+            <div class="control-block toggle-row">
+              <span>
+                <strong>Headphones</strong>
+                <small>Only connected audio counts</small>
+              </span>
+              <button
+                class="switch is-on"
+                id="headphone-toggle"
+                type="button"
+                role="switch"
+                aria-checked="true"
+              ><span></span></button>
+            </div>
+
+            <div class="demo-buttons">
+              <button class="primary-action" id="play-toggle" type="button">
+                <span aria-hidden="true">▶</span> Start music
+              </button>
+              <button class="reset-button" id="reset-demo" type="button" title="Reset demo">
+                ↻
+              </button>
+            </div>
+
+            <p class="demo-note">
+              Demo timing is compressed: 12 seconds listening, then a 6 second break.
+            </p>
+          </aside>
+        </div>
+
+        <footer class="demo-footer">
+          <span>Like the behavior?</span>
+          <div>
+            <a
+              href="https://github.com/bubbleTking/hearing-guardian/releases/latest"
+              target="_blank"
+              rel="noreferrer"
+            >Download for macOS ↗</a>
+            <a
+              href="https://github.com/bubbleTking/hearing-guardian"
+              target="_blank"
+              rel="noreferrer"
+            >GitHub ↗</a>
+          </div>
+        </footer>
+      </div>
+    </dialog>
+
+    <dialog class="presence-dialog" id="presence-dialog">
+      <div class="presence-shell">
+        <header class="presence-dialog-header">
+          <div>
+            <p class="kicker">Case file 01 · Snowbound train</p>
+            <h2><span lang="zh-CN">在场</span> / In Presence</h2>
+          </div>
+          <button
+            class="icon-button presence-close"
+            id="close-presence"
+            type="button"
+            aria-label="Close case preview"
+            title="Close"
+          >×</button>
+        </header>
+
+        <div class="presence-stage">
+          <section class="case-scene">
+            <img
+              src="/in-presence-cover.jpg"
+              alt=""
+              width="1904"
+              height="1088"
+            />
+            <div class="case-overlay">
+              <span>22:41 · Observation car</span>
+              <strong id="case-headline">A passenger is missing.</strong>
+              <p id="case-copy">
+                The train cannot stop until morning. Everyone in this carriage
+                remembers the evening differently.
+              </p>
+            </div>
+          </section>
+
+          <aside class="case-board">
+            <div class="case-progress">
+              <span>CASE PROGRESS</span>
+              <strong id="clue-count">0 / 3 clues</strong>
+            </div>
+            <div class="episode-track" aria-label="Six episode story">
+              <span class="is-current">1</span><span>2</span><span>3</span>
+              <span>4</span><span>5</span><span>6</span>
+            </div>
+            <div class="case-actions" id="case-actions">
+              <button type="button" data-clue="ticket">
+                <span>01</span>
+                <strong>Inspect the torn ticket</strong>
+                <small>Found beneath seat 12A</small>
+              </button>
+              <button type="button" data-clue="glass">
+                <span>02</span>
+                <strong>Examine the second glass</strong>
+                <small>Still warm to the touch</small>
+              </button>
+              <button type="button" data-clue="witness">
+                <span>03</span>
+                <strong>Question the conductor</strong>
+                <small>His timeline does not match</small>
+              </button>
+            </div>
+            <button class="connect-button" id="connect-clues" type="button" disabled>
+              Connect the evidence
+            </button>
+            <p class="case-result" id="case-result" aria-live="polite">
+              Choose evidence to build your theory.
+            </p>
+          </aside>
+        </div>
+      </div>
+    </dialog>
+
+    <script>const dialog = document.querySelector("#demo-dialog");
+const openButtons = [
+  document.querySelector("#try-demo"),
+  document.querySelector("#visual-demo"),
+];
+const closeButton = document.querySelector("#close-demo");
+const playButton = document.querySelector("#play-toggle");
+const resetButton = document.querySelector("#reset-demo");
+const headphoneButton = document.querySelector("#headphone-toggle");
+const volumeSlider = document.querySelector("#volume-slider");
+const volumeOutput = document.querySelector("#volume-output");
+const volumeReadout = document.querySelector("#demo-volume-readout");
+const volumeWarning = document.querySelector("#volume-warning");
+const timer = document.querySelector("#demo-timer");
+const timerLabel = document.querySelector("#demo-timer-label");
+const timerRing = document.querySelector("#timer-ring");
+const stateLabel = document.querySelector("#demo-state");
+const deviceLabel = document.querySelector("#demo-device");
+const playerLabel = document.querySelector("#demo-player");
+const modeLabel = document.querySelector("#demo-mode");
+
+const listenSeconds = 12;
+const breakSeconds = 6;
+let phase = "listening";
+let elapsed = 0;
+let playing = false;
+let headphones = true;
+let intervalId = null;
+
+function formatTime(seconds) {
+  const safe = Math.max(0, Math.ceil(seconds));
+  return `00:${String(safe).padStart(2, "0")}`;
+}
+
+function setPlayButton() {
+  playButton.innerHTML = playing
+    ? '<span aria-hidden="true">Ⅱ</span> Pause music'
+    : '<span aria-hidden="true">▶</span> Start music';
+}
+
+function updateDemo() {
+  const total = phase === "listening" ? listenSeconds : breakSeconds;
+  const remaining = total - elapsed;
+  const progress = Math.min(1, elapsed / total);
+  timer.textContent = formatTime(remaining);
+  timerRing.style.setProperty("--progress", `${progress * 360}deg`);
+  timerLabel.textContent = phase === "listening" ? "until break" : "break remaining";
+  modeLabel.textContent = phase === "listening" ? "Listening" : "On break";
+
+  if (!headphones) {
+    stateLabel.textContent = "Waiting for headphones";
+    deviceLabel.textContent = "Headphones disconnected";
+    playerLabel.textContent = playing ? "Playing, not counted" : "Paused";
+  } else if (phase === "break") {
+    stateLabel.textContent = "Give your ears a moment";
+    deviceLabel.textContent = "Automatic listening break";
+    playerLabel.textContent = "Paused by Guardian";
+  } else if (playing) {
+    stateLabel.textContent = "Listening safely";
+    deviceLabel.textContent = "Headphones connected";
+    playerLabel.textContent = "Spotify playing";
+  } else {
+    stateLabel.textContent = "Ready to listen";
+    deviceLabel.textContent = "Headphones connected";
+    playerLabel.textContent = "Paused";
+  }
+  setPlayButton();
+}
+
+function tick() {
+  if (!headphones || !playing || phase === "break") {
+    if (phase === "break") {
+      elapsed += 0.1;
+    } else {
+      updateDemo();
+      return;
+    }
+  } else {
+    elapsed += 0.1;
+  }
+
+  const total = phase === "listening" ? listenSeconds : breakSeconds;
+  if (elapsed >= total) {
+    elapsed = 0;
+    if (phase === "listening") {
+      phase = "break";
+      playing = false;
+    } else {
+      phase = "listening";
+      playing = true;
+    }
+  }
+  updateDemo();
+}
+
+function ensureTicker() {
+  if (!intervalId) {
+    intervalId = window.setInterval(tick, 100);
+  }
+}
+
+function resetDemo() {
+  phase = "listening";
+  elapsed = 0;
+  playing = false;
+  headphones = true;
+  headphoneButton.classList.add("is-on");
+  headphoneButton.setAttribute("aria-checked", "true");
+  volumeSlider.value = "62";
+  updateVolume();
+  updateDemo();
+}
+
+function updateVolume() {
+  const value = Number(volumeSlider.value);
+  volumeOutput.textContent = `${value}%`;
+  volumeReadout.textContent = `${value}%`;
+  volumeWarning.hidden = value < 70;
+}
+
+function openDemo() {
+  dialog.showModal();
+  ensureTicker();
+  updateDemo();
+}
+
+openButtons.forEach((button) => button.addEventListener("click", openDemo));
+closeButton.addEventListener("click", () => dialog.close());
+dialog.addEventListener("click", (event) => {
+  if (event.target === dialog) dialog.close();
+});
+playButton.addEventListener("click", () => {
+  if (phase === "break") return;
+  playing = !playing;
+  updateDemo();
+});
+resetButton.addEventListener("click", resetDemo);
+headphoneButton.addEventListener("click", () => {
+  headphones = !headphones;
+  headphoneButton.classList.toggle("is-on", headphones);
+  headphoneButton.setAttribute("aria-checked", String(headphones));
+  updateDemo();
+});
+volumeSlider.addEventListener("input", updateVolume);
+
+resetDemo();
+
+const presenceDialog = document.querySelector("#presence-dialog");
+const presenceButton = document.querySelector("#try-presence");
+const presenceClose = document.querySelector("#close-presence");
+const clueButtons = [...document.querySelectorAll("[data-clue]")];
+const clueCount = document.querySelector("#clue-count");
+const connectCluesButton = document.querySelector("#connect-clues");
+const caseResult = document.querySelector("#case-result");
+const caseHeadline = document.querySelector("#case-headline");
+const caseCopy = document.querySelector("#case-copy");
+const foundClues = new Set();
+
+const clueMessages = {
+  ticket: "The ticket was issued after the victim boarded. Someone else bought it.",
+  glass: "The second glass contains a sedative, but the victim never touched it.",
+  witness: "The conductor moved the meeting time forward by exactly seventeen minutes.",
+};
+
+function updateCase() {
+  clueCount.textContent = `${foundClues.size} / 3 clues`;
+  connectCluesButton.disabled = foundClues.size < 3;
+  if (foundClues.size === 0) {
+    caseResult.textContent = "Choose evidence to build your theory.";
+    return;
+  }
+  const latest = [...foundClues].at(-1);
+  caseResult.textContent = clueMessages[latest];
+}
+
+function resetCase() {
+  foundClues.clear();
+  clueButtons.forEach((button) => {
+    button.classList.remove("is-found");
+    button.disabled = false;
+  });
+  caseHeadline.textContent = "A passenger is missing.";
+  caseCopy.textContent =
+    "The train cannot stop until morning. Everyone in this carriage remembers the evening differently.";
+  connectCluesButton.textContent = "Connect the evidence";
+  updateCase();
+}
+
+presenceButton.addEventListener("click", () => {
+  resetCase();
+  presenceDialog.showModal();
+});
+
+presenceClose.addEventListener("click", () => presenceDialog.close());
+presenceDialog.addEventListener("click", (event) => {
+  if (event.target === presenceDialog) presenceDialog.close();
+});
+
+clueButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    foundClues.add(button.dataset.clue);
+    button.classList.add("is-found");
+    button.disabled = true;
+    updateCase();
+  });
+});
+
+connectCluesButton.addEventListener("click", () => {
+  caseHeadline.textContent = "The disappearance was staged.";
+  caseCopy.textContent =
+    "The ticket created a false passenger, the drugged glass framed a suspect, and the altered timeline opened a seventeen-minute escape window.";
+  connectCluesButton.textContent = "Theory connected";
+  connectCluesButton.disabled = true;
+  caseResult.textContent =
+    "Case preview complete. The full story continues across six interactive episodes.";
+});
+</script>
+  </body>
+</html>
