@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inheritance Tax — Impact Simulator</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'DM Sans',sans-serif;background:#fff;color:#1a1a20;min-height:100vh;padding:2rem}
+  .page{max-width:960px;margin:0 auto}
+
+  .header{text-align:center;margin-bottom:2rem}
+  .header h1{font-size:21px;font-weight:500;color:#1a1a20;letter-spacing:-0.02em;margin-bottom:4px}
+  .header p{font-size:11px;color:#aaa8a2;letter-spacing:0.05em;text-transform:uppercase}
+
+  /* CASE BADGE — auto-detects real world match */
+  .case-badge{
+    display:flex;align-items:center;gap:10px;
+    background:#f6f5f1;border:0.5px solid #dddbd5;
+    border-radius:12px;padding:0.85rem 1.1rem;margin-bottom:1.25rem;
+    transition:background 0.4s,border-color 0.4s
+  }
+  .case-flag{font-size:24px;flex-shrink:0;transition:all 0.3s}
+  .case-body{}
+  .case-label{font-size:11px;font-weight:500;color:#aaa8a2;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:2px}
+  .case-name{font-size:14px;font-weight:600;color:#1a1a20;margin-bottom:2px}
+  .case-desc{font-size:11px;color:#777570;line-height:1.5}
+
+  /* SLIDERS */
+  .sliders{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:10px}
+  .sc{background:#f6f5f1;border:0.5px solid #dddbd5;border-radius:12px;padding:1rem 1.1rem;transition:border-color 0.3s}
+  .sc-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:3px}
+  .sc-name{font-size:11px;font-weight:500;color:#999790;letter-spacing:0.04em;text-transform:uppercase}
+  .sc-val{font-size:22px;font-weight:600;color:#1a1a20;font-family:'DM Mono',monospace;transition:color 0.3s}
+  .sc-sub{font-size:10px;color:#bbb8b2;margin-bottom:8px;line-height:1.4}
+  .rr{display:flex;gap:6px;align-items:center}
+  .re{font-size:10px;color:#ccc9c2;white-space:nowrap}
+  input[type=range]{flex:1;-webkit-appearance:none;appearance:none;height:3px;background:#dddbd5;border-radius:2px;outline:none;cursor:pointer}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:15px;height:15px;border-radius:50%;background:#c8a96e;cursor:pointer;box-shadow:0 0 0 3px rgba(200,169,110,0.2)}
+  input[type=range]::-moz-range-thumb{width:15px;height:15px;border-radius:50%;background:#c8a96e;cursor:pointer;border:none}
+
+  /* MAIN 3 PANELS */
+  .panels{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px}
+  .panel{background:#f6f5f1;border:0.5px solid #dddbd5;border-radius:12px;padding:1.1rem}
+  .panel-lbl{font-size:10px;color:#aaa8a2;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:0.9rem}
+
+  /* BUILDING */
+  .bwrap{display:flex;flex-direction:column;align-items:center}
+  .b-roof{width:0;height:0;border-left:34px solid transparent;border-right:34px solid transparent;border-bottom:20px solid #3a70c8;transition:border-bottom-color 0.4s}
+  .b-floors{display:flex;flex-direction:column;gap:2px;width:68px}
+  .fl{height:12px;border-radius:2px;transition:background 0.4s;position:relative;overflow:hidden}
+  .fl.off{background:#eeece8;border:0.5px solid #dddbd5}
+  .fl.sold{background:#fde8e8;border:0.5px solid #f0c0c0}
+  .fl.sold::after{content:'✕';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:7px;color:#c08080}
+  .b-base{width:76px;height:8px;border-radius:0 0 3px 3px;transition:background 0.4s}
+  .b-num{font-size:26px;font-weight:600;font-family:'DM Mono',monospace;margin-top:10px;transition:color 0.4s;text-align:center}
+  .b-sub{font-size:10px;color:#aaa8a2;margin-top:3px;text-align:center;line-height:1.4}
+
+  /* MONEY ROWS */
+  .mrow{display:flex;align-items:center;gap:6px;margin-bottom:7px}
+  .mrow:last-child{margin-bottom:0}
+  .mrow-lbl{font-size:10px;color:#999790;width:80px;text-align:right;flex-shrink:0}
+  .mrow-coins{display:flex;gap:2px;flex-wrap:wrap}
+  .coin{font-size:14px;transition:opacity 0.3s,filter 0.3s;display:inline-block}
+  .coin.off{opacity:0.12;filter:grayscale(1)}
+  .mrow-val{font-size:11px;font-family:'DM Mono',monospace;color:#888580;min-width:48px}
+  .divrow{font-size:9px;color:#bbb8b2;text-align:center;margin:1px 0 5px 80px}
+
+  /* VERDICT */
+  .verdict{border-radius:12px;padding:0.9rem 1.2rem;display:flex;align-items:center;gap:12px;border:0.5px solid;transition:all 0.35s;margin-bottom:10px}
+  .v-emoji{font-size:24px;flex-shrink:0}
+  .v-title{font-size:13px;font-weight:600;margin-bottom:2px}
+  .v-desc{font-size:11px;line-height:1.5;opacity:0.88}
+
+  /* STATS */
+  .stats{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:10px}
+  .stat{background:#f6f5f1;border:0.5px solid #dddbd5;border-radius:10px;padding:0.75rem;text-align:center}
+  .stat-lbl{font-size:10px;color:#aaa8a2;margin-bottom:3px}
+  .stat-val{font-size:15px;font-weight:600;font-family:'DM Mono',monospace;color:#1a1a20;transition:color 0.3s}
+
+  /* FLOW */
+  .flow{background:#f6f5f1;border:0.5px solid #dddbd5;border-radius:12px;padding:1rem}
+  .flow-lbl{font-size:10px;color:#aaa8a2;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:0.85rem}
+  .flow-cells{display:flex;align-items:stretch;gap:5px;flex-wrap:wrap}
+  .fc{flex:1;min-width:55px;background:#eeece8;border-radius:8px;padding:7px 5px;text-align:center}
+  .fc-l{font-size:9px;color:#aaa8a2;margin-bottom:2px;text-transform:uppercase;letter-spacing:0.03em}
+  .fc-v{font-size:12px;font-weight:600;font-family:'DM Mono',monospace;color:#1a1a20;transition:color 0.3s}
+  .fa{font-size:12px;color:#ccc9c2;display:flex;align-items:center;flex-shrink:0}
+
+  .bg-ok{background:rgba(40,110,60,0.08);border-color:rgba(80,170,110,0.3)}
+  .bg-warn{background:rgba(130,80,20,0.08);border-color:rgba(210,130,70,0.3)}
+  .bg-bad{background:rgba(120,30,30,0.08);border-color:rgba(220,90,90,0.3)}
+  .bg-crit{background:rgba(100,10,10,0.14);border-color:rgba(220,90,90,0.55)}
+  .t-ok{color:#3a9960}.t-warn{color:#c87830}.t-bad{color:#d84040}.t-crit{color:#ff3030}
+  .c-red{color:#d84040}.c-blue{color:#3a70c8}
+
+  /* QUICK CASE PRESET PILLS */
+  .presets{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:1.25rem}
+  .preset{background:#f6f5f1;border:0.5px solid #dddbd5;border-radius:20px;padding:5px 12px;font-size:11px;cursor:pointer;transition:all 0.2s;color:#555350;font-family:'DM Sans',sans-serif}
+  .preset:hover{background:#eeecea;border-color:#bbb8b2}
+  .preset.active{background:#1a1a20;border-color:#1a1a20;color:#fff}
+
+  /* RELIEF SLIDER */
+  .relief-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1.25rem}
+  .relief-card{background:#f0f7f0;border:0.5px solid #b8d8b8;border-radius:12px;padding:1rem 1.1rem;transition:all 0.4s}
+  .relief-card.none{background:#fdf0f0;border-color:#f0c0c0}
+  .relief-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:3px}
+  .relief-name{font-size:11px;font-weight:500;color:#999790;letter-spacing:0.04em;text-transform:uppercase}
+  .relief-val{font-size:22px;font-weight:600;font-family:'DM Mono',monospace;transition:color 0.3s}
+  .relief-sub{font-size:10px;color:#888580;margin-bottom:8px;line-height:1.5}
+  .relief-pills{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+  .rpill{font-size:10px;padding:3px 8px;border-radius:10px;border:0.5px solid #dddbd5;background:#fff;color:#666;cursor:pointer;font-family:'DM Sans',sans-serif}
+  .rpill:hover{background:#f0f0f0}
+  /* RATE SPLIT in flow */
+  .rate-split{font-size:10px;color:#aaa8a2;text-align:center;margin-top:2px;line-height:1.3}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <h1>🏛️ Inheritance Tax — Succession Impact Simulator</h1>
+    <p>Drag the three levers · watch control collapse in real time</p>
+  </div>
+
+  <!-- QUICK PRESETS -->
+  <div class="presets">
+    <button class="preset" onclick="applyPreset(0,5,60,5,0,2)">🏢 Samsung (actual)</button>
+    <button class="preset" onclick="applyPreset(1,3,50,12,0,0)">🇰🇷 Korea medium co.</button>
+    <button class="preset" onclick="applyPreset(2,3,55,12,60,0)">🇯🇵 Japan medium co.</button>
+    <button class="preset" onclick="applyPreset(3,3,0,12,0,0)">🇭🇰 HK / 🇨🇳 CN</button>
+    <button class="preset" onclick="applyPreset(4,1,50,35,0,0)">📦 Simple biz, high liq</button>
+  </div>
+
+  <!-- ESTATE SIZE -->
+  <div style="display:flex;gap:7px;margin-bottom:1.25rem;align-items:center">
+    <span style="font-size:11px;color:#aaa8a2;text-transform:uppercase;letter-spacing:0.04em;white-space:nowrap">Estate scale:</span>
+    <button class="preset epill" onclick="setEstate(0)">Medium co. $500M</button>
+    <button class="preset epill" onclick="setEstate(1)">Large co. $5B</button>
+    <button class="preset epill active" onclick="setEstate(2)">Samsung $23B</button>
+  </div>
+  <!-- SLIDERS -->
+  <div class="sliders">
+    <div class="sc" id="sc-tax">
+      <div class="sc-top"><span class="sc-name">① Tax Rate</span><span class="sc-val" id="v-tax">60%</span></div>
+      <div class="sc-sub">0% = HK/CN · 50% = Korea base · 55% = Japan · 60% = Korea chaebol surcharge</div>
+      <div class="rr"><span class="re">0%</span><input type="range" min="0" max="60" step="1" value="60" id="s-tax" oninput="update()"><span class="re">60%</span></div>
+    </div>
+    <div class="sc" id="sc-liq">
+      <div class="sc-top"><span class="sc-name">② Liquidity</span><span class="sc-val" id="v-liq">5%</span></div>
+      <div class="sc-sub">Accessible cash as % of estate · family businesses are asset-rich, cash-poor · Korea reality: 5–12%</div>
+      <div class="rr"><span class="re">0%</span><input type="range" min="0" max="40" step="1" value="5" id="s-liq" oninput="update()"><span class="re">40%</span></div>
+    </div>
+    <div class="sc" id="sc-cplx">
+      <div class="sc-top"><span class="sc-name">③ Structure</span><span class="sc-val" id="v-cplx">Chaebol</span></div>
+      <div class="sc-sub">Simple = direct ownership · Chaebol = cross-shareholding pyramid · more layers = more leverage but bigger tax trap</div>
+      <div class="rr"><span class="re">Simple</span><input type="range" min="1" max="5" step="1" value="5" id="s-cplx" oninput="update()"><span class="re">Chaebol</span></div>
+    </div>
+  </div>
+
+
+  <!-- POLICY RELIEF -->
+  <div class="relief-row">
+    <div class="relief-card none" id="relief-card">
+      <div class="relief-top">
+        <span class="relief-name">④ Policy Relief System</span>
+        <span class="relief-val" id="v-relief" style="color:#d84040">0%</span>
+      </div>
+      <div class="relief-sub" id="relief-sub">No relief — Korea applies full rate to full taxable estate. No deferral for large companies. Bill due in 5 years.</div>
+      <div class="rr"><span class="re">0%</span><input type="range" min="0" max="100" step="5" value="0" id="s-relief" oninput="update()"><span class="re">100%</span></div>
+      <div class="relief-pills">
+        <button class="rpill" onclick="setRelief(0,'Korea')">🇰🇷 Korea (0%)</button>
+        <button class="rpill" onclick="setRelief(40,'Japan SME')">🇯🇵 Japan SME (~40%)</button>
+        <button class="rpill" onclick="setRelief(70,'Japan full')">🇯🇵 Japan full relief (~70%)</button>
+      </div>
+    </div>
+    <div class="relief-card" id="relief-explain" style="background:#f6f5f1;border-color:#dddbd5">
+      <div class="relief-top"><span class="relief-name">what this relief covers</span></div>
+      <div class="relief-sub" id="relief-explain-text" style="margin-bottom:0">
+        <strong style="color:#1a1a20;font-size:11px">Japan's 2018 Business Succession Tax Relief (事業承継税制):</strong><br>
+        · Up to 100% deferral on inherited business shares<br>
+        · Heir must maintain employment levels + continue operating<br>
+        · Tax eventually <em>waived entirely</em> if conditions met<br>
+        · Plus: valuation discounts up to 80%, spousal exemption ¥160M+, 20-yr installment<br>
+        · Korea equivalent: <strong style="color:#d84040">none for listed companies / large groups</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- CASE BADGE -->
+  <div class="case-badge" id="case-badge">
+    <div class="case-flag" id="case-flag">🏢</div>
+    <div class="case-body">
+      <div class="case-label">closest real-world match</div>
+      <div class="case-name" id="case-name">Samsung — Lee family succession (2020)</div>
+      <div class="case-desc" id="case-desc">$10.8B tax bill on $23B estate. Lee family held 96% effective control via cross-shareholdings on just 8% direct ownership. The pyramid that gave them power became the mechanism of losing it.</div>
+    </div>
+  </div>
+
+  <!-- PANELS -->
+  <div class="panels">
+    <div class="panel">
+      <div class="panel-lbl">👑 voting power — before succession</div>
+      <div class="bwrap">
+        <div class="b-roof" id="roof-pre"></div>
+        <div class="b-floors" id="floors-pre"></div>
+        <div class="b-base" id="base-pre"></div>
+        <div class="b-num c-blue" id="num-pre">–</div>
+        <div class="b-sub" id="sub-pre"></div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-lbl">💰 money breakdown</div>
+      <div class="mrow">
+        <span class="mrow-lbl">tax bill</span>
+        <span class="mrow-coins" id="coins-bill"></span>
+        <span class="mrow-val" id="val-bill">–</span>
+      </div>
+      <div class="divrow">↑ must pay · only ↓ in cash</div>
+      <div class="mrow">
+        <span class="mrow-lbl">accessible cash</span>
+        <span class="mrow-coins" id="coins-cash"></span>
+        <span class="mrow-val" id="val-cash">–</span>
+      </div>
+      <div class="divrow">↓ gap = sell shares ↓</div>
+      <div class="mrow">
+        <span class="mrow-lbl">forced sale</span>
+        <span class="mrow-coins" id="coins-sold"></span>
+        <span class="mrow-val c-red" id="val-sold">–</span>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-lbl">🏢 voting power — after succession</div>
+      <div class="bwrap">
+        <div class="b-roof" id="roof-post"></div>
+        <div class="b-floors" id="floors-post"></div>
+        <div class="b-base" id="base-post"></div>
+        <div class="b-num" id="num-post">–</div>
+        <div class="b-sub" id="sub-post"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VERDICT -->
+  <div class="verdict bg-crit" id="verdict">
+    <div class="v-emoji" id="v-emoji">💀</div>
+    <div>
+      <div class="v-title t-crit" id="v-title">–</div>
+      <div class="v-desc" id="v-desc">–</div>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat"><div class="stat-lbl">Effective tax rate</div><div class="stat-val" id="s-rate">–</div></div>
+    <div class="stat"><div class="stat-lbl">Taxable estate</div><div class="stat-val" id="s-estate">–</div></div>
+    <div class="stat"><div class="stat-lbl">Tax bill</div><div class="stat-val" id="s-bill">–</div></div>
+    <div class="stat"><div class="stat-lbl">Funding gap</div><div class="stat-val c-red" id="s-gap">–</div></div>
+    <div class="stat"><div class="stat-lbl">Control lost</div><div class="stat-val c-red" id="s-drop">–</div></div>
+  </div>
+
+  <!-- FLOW -->
+  <div class="flow">
+    <div class="flow-lbl">📊 cascade calculation</div>
+    <div class="flow-cells">
+      <div class="fc"><div class="fc-l">base estate</div><div class="fc-v" id="fc-base">–</div></div>
+      <div class="fa">×</div>
+      <div class="fc"><div class="fc-l">🔗 valuation ×</div><div class="fc-v" id="fc-mult">–</div></div>
+      <div class="fa">=</div>
+      <div class="fc"><div class="fc-l">taxable estate</div><div class="fc-v" id="fc-taxable">–</div></div>
+      <div class="fa">×</div>
+      <div class="fc"><div class="fc-l">rate</div><div class="fc-v" id="fc-rate">–</div><div class="rate-split" id="fc-rate-split"></div></div>
+      <div class="fa">=</div>
+      <div class="fc"><div class="fc-l">💸 tax bill</div><div class="fc-v" id="fc-bill">–</div></div>
+      <div class="fa">−</div>
+      <div class="fc"><div class="fc-l">💵 cash</div><div class="fc-v" id="fc-cash">–</div></div>
+      <div class="fa">=</div>
+      <div class="fc"><div class="fc-l">🚨 gap</div><div class="fc-v c-red" id="fc-gap">–</div></div>
+    </div>
+  </div>
+
+</div>
+<script>
+const FLOORS = 10;
+
+// ── PER-COMPLEXITY CONSTANTS ─────────────────────────────────────────────────
+const cplxLabel    = ['Simple','Low','Medium','High','Chaebol'];
+
+// KOREA: circular cross-holdings inflate taxable estate (each layer counted at market price)
+const korValMult   = [1.00, 1.20, 1.45, 1.75, 2.10];
+// JAPAN: business share valuation DISCOUNT (up to 80%) → taxable estate shrinks
+const jpnValMult   = [0.70, 0.60, 0.50, 0.42, 0.38];
+// Cash lock-up from cross-holding structure (higher cplx = harder to liquidate)
+const cashPenalty  = [1.0,  1.3,  1.7,  2.2,  3.0];
+// Japan 20-yr installment: annual cash pressure = 1/4 of Korea's 5-yr window
+// Modelled as reduced effective cashPenalty for Japan
+const jpnCashMult  = 0.35;
+// Direct ownership baseline (simple biz owns more directly; chaebol owns less)
+const directOwn    = [0.80, 0.55, 0.35, 0.18, 0.08];
+// Voting leverage from cross-shareholding pyramid
+const powerLev     = [1.00, 1.80, 3.50, 7.00,12.00];
+
+// ── ESTATE SIZE PRESETS ──────────────────────────────────────────────────────
+// User can choose scale: Medium Co $500M / Large Co $5B / Samsung $23B
+const ESTATE_SIZES = [0.5, 5, 23];
+const ESTATE_LABELS = ['Medium co. $500M', 'Large co. $5B', 'Samsung $23B'];
+let estateIdx = 2; // default Samsung
+
+// ── REAL WORLD CASES ─────────────────────────────────────────────────────────
+// Detection: checks tax, liq, cplx AND relief to distinguish Japan from Korea
+const CASES = [
+  { tax:[55,60], liq:[0,12],  cplx:[4,5], reliefMin:0, reliefMax:15,
+    flag:'🏢', name:'Samsung — Lee family succession (2020)',
+    desc:'$10.8B tax bill on $23B estate. 60% effective rate (50% base + 20% chaebol surcharge). Cross-shareholding pyramid: 8% direct ownership → 96% operational control. The structure designed to give power became the mechanism of losing it.' },
+  { tax:[48,60], liq:[0,20],  cplx:[2,5], reliefMin:0, reliefMax:15,
+    flag:'🇰🇷', name:'Korea — typical family business succession',
+    desc:'50–60% rate, limited payment window (5 years, 1/6 upfront), no meaningful relief for listed companies or large groups. Significant forced equity sales required to fund the bill.' },
+  { tax:[48,60], liq:[6,25],  cplx:[1,4], reliefMin:35, reliefMax:100,
+    flag:'🇯🇵', name:'Japan — business succession with relief applied',
+    desc:'Headline 55% but 2018 Business Succession Tax Relief (事業承継税制) provides: up to 100% deferral on business shares, 80% valuation discount, 20-year installment window. Effective rate drops dramatically. Same headline rate — completely different outcome.' },
+  { tax:[0,5],   liq:[0,40],  cplx:[1,5], reliefMin:0, reliefMax:100,
+    flag:'🇭🇰', name:'HK / China — zero inheritance tax',
+    desc:'HK abolished inheritance tax in 2006. China has no federal estate tax. Zero bill = zero forced sales = control fully intact. Succession is purely a governance question, never a forced liquidation.' },
+  { tax:[30,55], liq:[22,40], cplx:[1,2], reliefMin:0, reliefMax:20,
+    flag:'📦', name:'Simple business, high liquidity',
+    desc:'High direct ownership (~75–80%), low complexity, strong accessible cash. Tax bill is proportional to actual estate. Family can fund succession without losing control.' },
+];
+
+function detectCase(tax, liq, cplx, reliefPct) {
+  for (const c of CASES) {
+    if (tax      < c.tax[0]     || tax     > c.tax[1])     continue;
+    if (liq      < c.liq[0]     || liq     > c.liq[1])     continue;
+    if (cplx     < c.cplx[0]    || cplx    > c.cplx[1])    continue;
+    if (reliefPct < c.reliefMin || reliefPct > c.reliefMax) continue;
+    // Samsung is more specific: needs high tax + high cplx + low liq
+    if (c.flag === '🏢' && !(tax >= 55 && cplx >= 4 && liq <= 12)) continue;
+    return c;
+  }
+  return null;
+}
+
+// ── HELPERS ──────────────────────────────────────────────────────────────────
+function coins(val, maxVal, em, n) {
+  if (maxVal <= 0) return '';
+  const f = Math.min(n, Math.round(val / maxVal * n));
+  let h = '';
+  for (let i = 0; i < n; i++) h += `<span class="coin${i >= f ? ' off' : ''}">${em}</span>`;
+  return h;
+}
+
+function preFloorHTML(n) {
+  let h = '';
+  for (let i = FLOORS-1; i >= 0; i--)
+    h += `<div class="fl ${i<n?'':'off'}" style="${i<n?'background:#3a70c8':''}"></div>`;
+  return h;
+}
+
+function postFloorHTML(kept, preN) {
+  const pct = kept / FLOORS * 100;
+  const pc = pct > 55 ? '#3a9960' : pct > 25 ? '#c87830' : '#d84040';
+  let h = '';
+  for (let i = FLOORS-1; i >= 0; i--) {
+    if (i < kept)      h += `<div class="fl" style="background:${pc}"></div>`;
+    else if (i < preN) h += `<div class="fl sold"></div>`;
+    else               h += `<div class="fl off"></div>`;
+  }
+  return h;
+}
+
+function postColor(pct) {
+  return pct > 55 ? '#3a9960' : pct > 25 ? '#c87830' : '#d84040';
+}
+
+function fmt(v, estate) {
+  // Always format relative to estate scale
+  if (estate >= 10) return '$' + v.toFixed(1) + 'B';
+  if (estate >= 1)  return '$' + v.toFixed(2) + 'B';
+  // Sub-billion: show in millions
+  return '$' + Math.round(v * 1000) + 'M';
+}
+
+function setEstate(idx) {
+  estateIdx = idx;
+  document.querySelectorAll('.epill').forEach((b,i) => b.classList.toggle('active', i===idx));
+  update();
+}
+
+function setRelief(val) {
+  document.getElementById('s-relief').value = val;
+  update();
+}
+
+function applyPreset(id, cplx, tax, liq, relief, eIdx) {
+  document.getElementById('s-tax').value    = tax;
+  document.getElementById('s-liq').value    = liq;
+  document.getElementById('s-cplx').value   = cplx;
+  document.getElementById('s-relief').value = relief;
+  estateIdx = eIdx !== undefined ? eIdx : estateIdx;
+  document.querySelectorAll('.epill').forEach((b,i) => b.classList.toggle('active', i===estateIdx));
+  document.querySelectorAll('.preset').forEach((b,i) => b.classList.toggle('active', i===id));
+  update();
+}
+
+// ── CORE UPDATE ───────────────────────────────────────────────────────────────
+function update() {
+  const tax       = parseInt(document.getElementById('s-tax').value);
+  const liq       = parseInt(document.getElementById('s-liq').value);
+  const cplx      = parseInt(document.getElementById('s-cplx').value);
+  const reliefPct = parseInt(document.getElementById('s-relief').value);
+  const ci        = cplx - 1;
+  const ESTATE    = ESTATE_SIZES[estateIdx];
+  const isJapan   = reliefPct >= 35;
+
+  document.getElementById('v-tax').textContent  = tax + '%';
+  document.getElementById('v-liq').textContent  = liq + '%';
+  document.getElementById('v-cplx').textContent = cplxLabel[ci];
+
+  // ── FINANCIAL MODEL ───────────────────────────────────────────────────────
+  // 1. Valuation: Korea inflates via circular holdings; Japan discounts business shares
+  const vMult      = isJapan ? jpnValMult[ci] : korValMult[ci];
+  const taxEstate  = ESTATE * vMult;
+
+  // 2. Effective rate after relief
+  const reliefMult = 1 - (reliefPct / 100);
+  const effRate    = tax * reliefMult;
+
+  // 3. Tax bill
+  const taxBill = taxEstate * effRate / 100;
+
+  // 4. Accessible cash: raw cash / structural lock-up penalty
+  //    Japan: 20-yr installment means annual obligation is ~4x lower → reduce pressure
+  const rawCash       = ESTATE * liq / 100;
+  const structPenalty = cashPenalty[ci];
+  const timePenalty   = isJapan ? jpnCashMult : 1.0;
+  const accessCash    = rawCash / (structPenalty * timePenalty);
+
+  // 5. Funding gap and forced sales
+  const gap     = Math.max(0, taxBill - accessCash);
+  const sellPct = Math.min(100, Math.round(gap / ESTATE * 100));
+
+  // ── POWER MODEL ───────────────────────────────────────────────────────────
+  const own      = directOwn[ci];
+  const lev      = powerLev[ci];
+  const prePower = Math.min(100, Math.round(own * lev * 100));
+  // Selling shares unwinds the cross-holding pyramid — control loss is amplified
+  const cascade  = cplx >= 3 ? 1.4 : 1.0;
+  const postPower = Math.max(0, Math.round(prePower * (1 - sellPct / 100 * cascade)));
+  const drop     = prePower - postPower;
+  // ─────────────────────────────────────────────────────────────────────────
+
+  // ── RELIEF PANEL ─────────────────────────────────────────────────────────
+  const reliefCard = document.getElementById('relief-card');
+  const reliefSub  = document.getElementById('relief-sub');
+  const vReliefEl  = document.getElementById('v-relief');
+  vReliefEl.textContent = reliefPct + '%';
+  vReliefEl.style.color = reliefPct >= 50 ? '#3a9960' : reliefPct >= 20 ? '#c87830' : '#d84040';
+  reliefCard.className  = 'relief-card' + (reliefPct < 10 ? ' none' : '');
+  if (reliefPct === 0) {
+    reliefSub.textContent = 'No relief — Korea applies full rate to full inflated taxable estate. No deferral for large listed companies. 1/6 upfront + remainder over 5 years.';
+  } else if (reliefPct < 35) {
+    reliefSub.innerHTML = `<strong style="color:#c87830">Partial relief</strong> — limited deferral or deduction. Tax bill reduced to ${effRate.toFixed(0)}% effective but gap remains significant.`;
+  } else if (reliefPct < 70) {
+    reliefSub.innerHTML = `<strong style="color:#3a9960">Japan SME succession relief (2018)</strong> — shares deferred, valuation discounted to ${Math.round(vMult*100)}% of market. Effective rate drops to ${effRate.toFixed(0)}%. Annual cash pressure reduced via 20-yr window.`;
+  } else {
+    reliefSub.innerHTML = `<strong style="color:#3a9960">Japan full relief</strong> — heir continues operations, employment maintained. Business share tax effectively waived. Valuation: ${Math.round(vMult*100)}% of market. Effective rate: ${effRate.toFixed(0)}% of headline ${tax}%.`;
+  }
+
+  // ── FLOW ─────────────────────────────────────────────────────────────────
+  document.getElementById('fc-base').textContent    = fmt(ESTATE, ESTATE);
+  document.getElementById('fc-mult').textContent    = (isJapan ? '×' : '×') + vMult.toFixed(2) + (isJapan ? ' 📉' : ' 📈');
+  document.getElementById('fc-taxable').textContent = fmt(taxEstate, ESTATE);
+  document.getElementById('fc-rate').textContent    = effRate.toFixed(1) + '%';
+  document.getElementById('fc-rate-split').textContent = reliefPct > 0
+    ? tax + '% headline → ' + effRate.toFixed(1) + '% effective'
+    : 'headline = effective (no relief)';
+  document.getElementById('fc-bill').textContent    = fmt(taxBill, ESTATE);
+  document.getElementById('fc-cash').textContent    = fmt(accessCash, ESTATE);
+  document.getElementById('fc-gap').textContent     = fmt(gap, ESTATE);
+
+  // ── STATS ─────────────────────────────────────────────────────────────────
+  document.getElementById('s-rate').textContent   = effRate.toFixed(1) + '%';
+  document.getElementById('s-estate').textContent = fmt(taxEstate, ESTATE);
+  document.getElementById('s-bill').textContent   = fmt(taxBill, ESTATE);
+  document.getElementById('s-gap').textContent    = fmt(gap, ESTATE);
+  document.getElementById('s-drop').textContent   = drop > 0 ? '−' + drop + 'pts' : '0 pts';
+  document.getElementById('s-gap').style.color    = gap > ESTATE * 0.1 ? '#d84040' : '#3a9960';
+  document.getElementById('s-drop').style.color   = drop > 15 ? '#d84040' : drop > 0 ? '#c87830' : '#3a9960';
+
+  // ── COINS ─────────────────────────────────────────────────────────────────
+  const coinMax = Math.max(taxEstate, ESTATE);
+  document.getElementById('coins-bill').innerHTML = coins(taxBill,    coinMax, '💰', 10);
+  document.getElementById('coins-cash').innerHTML = coins(accessCash, coinMax, '💵', 10);
+  document.getElementById('coins-sold').innerHTML = coins(gap,        coinMax, '📉', 10);
+  document.getElementById('val-bill').textContent = fmt(taxBill, ESTATE);
+  document.getElementById('val-cash').textContent = fmt(accessCash, ESTATE);
+  document.getElementById('val-sold').textContent = fmt(gap, ESTATE);
+
+  // ── PRE BUILDING ──────────────────────────────────────────────────────────
+  const preF = Math.round(prePower / 100 * FLOORS);
+  document.getElementById('floors-pre').innerHTML              = preFloorHTML(preF);
+  document.getElementById('roof-pre').style.borderBottomColor  = '#3a70c8';
+  document.getElementById('base-pre').style.background         = '#3a70c8';
+  document.getElementById('num-pre').textContent  = prePower + '%';
+  document.getElementById('sub-pre').textContent  = cplx === 1
+    ? Math.round(own*100) + '% direct ownership'
+    : '×' + lev.toFixed(1) + ' leverage · ' + Math.round(own*100) + '% direct → ' + prePower + '% effective';
+
+  // ── POST BUILDING ─────────────────────────────────────────────────────────
+  const postF = Math.round(postPower / 100 * FLOORS);
+  const pc = postColor(postPower);
+  document.getElementById('floors-post').innerHTML             = postFloorHTML(postF, preF);
+  document.getElementById('roof-post').style.borderBottomColor = pc;
+  document.getElementById('base-post').style.background        = pc;
+  document.getElementById('num-post').textContent = postPower + '%';
+  document.getElementById('num-post').style.color = pc;
+  document.getElementById('sub-post').textContent = sellPct > 0
+    ? '−' + drop + 'pts · sold ' + sellPct + '% to pay tax'
+    : 'no forced sales — control intact';
+
+  // ── CASE BADGE ────────────────────────────────────────────────────────────
+  const matched = detectCase(tax, liq, cplx, reliefPct);
+  const badge   = document.getElementById('case-badge');
+  if (matched) {
+    document.getElementById('case-flag').textContent = matched.flag;
+    document.getElementById('case-name').textContent = matched.name;
+    document.getElementById('case-desc').textContent = matched.desc;
+    badge.style.background  = 'rgba(200,169,110,0.08)';
+    badge.style.borderColor = 'rgba(200,169,110,0.4)';
+  } else {
+    document.getElementById('case-flag').textContent = '🎚️';
+    document.getElementById('case-name').textContent = 'Custom scenario';
+    document.getElementById('case-desc').textContent = 'No exact real-world match — use the preset pills above to jump to a reference case.';
+    badge.style.background  = '';
+    badge.style.borderColor = '';
+  }
+
+  // ── VERDICT ───────────────────────────────────────────────────────────────
+  const gapPct = gap / ESTATE * 100;
+  let vC, em, ti, de, tC;
+  if (tax === 0) {
+    vC='bg-ok';tC='t-ok';em='✅';ti='No Inheritance Tax — Succession Safe';
+    de='Zero tax bill regardless of structure or liquidity. Family retains ' + prePower + '% voting control post-succession. This is the HK / China model — succession is a governance question, not a financial crisis.';
+  } else if (gapPct < 8) {
+    vC='bg-ok';tC='t-ok';em='✅';ti='Low Risk — Succession Manageable';
+    de='Tax bill of ' + fmt(taxBill,ESTATE) + ' largely covered by accessible cash' + (isJapan?' and 20-yr installment window':'') + '. Minimal share sales. Control holds at ' + postPower + '% post-succession.';
+  } else if (gapPct < 30) {
+    vC='bg-warn';tC='t-warn';em='⚠️';ti='Medium Risk — Some Equity Sales Required';
+    de='Funding gap of ' + fmt(gap,ESTATE) + ' forces share sales. Control: ' + prePower + '% → ' + postPower + '% (−' + drop + 'pts). Majority likely retained but leverage pyramid starts to unwind.';
+  } else if (gapPct < 65) {
+    vC='bg-bad';tC='t-bad';em='🚨';ti='High Risk — Control at Stake';
+    de='Forced sales of ' + sellPct + '% collapse the cross-holding structure. Control: ' + prePower + '% → ' + postPower + '% (−' + drop + 'pts). Outside shareholders gain real strategic influence.';
+  } else {
+    vC='bg-crit';tC='t-crit';em='💀';ti='Critical — Control Destroyed';
+    de='Taxable estate ' + fmt(taxEstate,ESTATE) + '. Funding gap ' + fmt(gap,ESTATE) + '. Control: ' + prePower + '% → ' + postPower + '% (−' + drop + 'pts). The cross-holding structure built for power becomes the mechanism of its collapse.';
+  }
+  const vEl = document.getElementById('verdict');
+  vEl.className = 'verdict ' + vC;
+  document.getElementById('v-emoji').textContent = em;
+  document.getElementById('v-title').className   = 'v-title ' + tC;
+  document.getElementById('v-title').textContent  = ti;
+  document.getElementById('v-desc').textContent   = de;
+
+  document.querySelectorAll('.preset').forEach(b => b.classList.remove('active'));
+}
+
+// Init at Samsung defaults
+applyPreset(0, 5, 60, 5, 0, 2);
+
+</script>
+</body>
+</html>
