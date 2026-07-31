@@ -1109,6 +1109,137 @@ nav a {
   text-decoration: none;
 }
 
+.learning-feature {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(360px, 0.7fr);
+  min-height: 610px;
+  border: 1px solid var(--ink);
+  border-top: 0;
+  background: #030816;
+  color: var(--white);
+}
+
+.learning-visual {
+  position: relative;
+  min-width: 0;
+  display: grid;
+  align-content: center;
+  overflow: hidden;
+  border-right: 1px solid #223747;
+  background: #030816;
+  color: var(--white);
+  text-decoration: none;
+}
+
+.learning-visual::after {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(3, 8, 22, 0.1), rgba(3, 8, 22, 0.5)),
+    linear-gradient(90deg, rgba(3, 8, 22, 0.52), transparent 50%);
+  content: "";
+}
+
+.learning-visual img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  transition: opacity 180ms ease;
+}
+
+.learning-feature:hover .learning-visual img {
+  opacity: 0.9;
+}
+
+.learning-brand {
+  position: absolute;
+  z-index: 1;
+  top: 24px;
+  left: 24px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.learning-brand b {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  border-radius: 7px;
+  background: #5ed9f2;
+  color: #031019;
+  font-size: 11px;
+}
+
+.learning-brand strong {
+  font-size: 14px;
+}
+
+.learning-index {
+  position: absolute;
+  z-index: 1;
+  right: 22px;
+  bottom: 20px;
+  padding: 7px 9px;
+  background: #f97316;
+  color: #07111c;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.learning-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 48px;
+}
+
+.learning-meta {
+  color: #9eb5c5;
+}
+
+.learning-meta .status-dot {
+  background: #5ed9f2;
+  box-shadow: 0 0 0 4px rgba(94, 217, 242, 0.16);
+}
+
+.learning-course {
+  margin: 38px 0 10px;
+  color: #f97316;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.learning-copy h3 {
+  margin: 0 0 26px;
+  font-family: "Arial Narrow", "Helvetica Neue", sans-serif;
+  font-size: 62px;
+  font-weight: 800;
+  line-height: 0.86;
+  text-transform: uppercase;
+}
+
+.learning-copy > p:not(.learning-course) {
+  margin: 0 0 28px;
+  color: #c4d2dc;
+  font-size: 16px;
+  line-height: 1.58;
+}
+
+.learning-action {
+  background: #5ed9f2;
+  text-decoration: none;
+}
+
+.learning-copy .feature-list li {
+  border-color: #304657;
+  color: #b8c8d4;
+}
+
 .future-shelf {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1450,7 +1581,8 @@ output {
   .project-feature,
   .demo-stage,
   .presence-feature,
-  .excel-feature {
+  .excel-feature,
+  .learning-feature {
     grid-template-columns: 1fr;
   }
 
@@ -1474,6 +1606,12 @@ output {
     min-height: 520px;
     border-top: 1px solid var(--ink);
     border-left: 0;
+  }
+
+  .learning-visual {
+    min-height: 520px;
+    border-right: 0;
+    border-bottom: 1px solid #223747;
   }
 
   .about {
@@ -1511,6 +1649,18 @@ output {
 
   .excel-copy {
     padding: 42px 24px;
+  }
+
+  .learning-copy {
+    padding: 42px 24px;
+  }
+
+  .learning-copy h3 {
+    font-size: 52px;
+  }
+
+  .learning-visual {
+    min-height: 360px;
   }
 
   .small-project-grid {
