@@ -19,6 +19,22 @@ test("renders the project shelf and interactive demo", async () => {
   assert.match(html, /https:\/\/github\.com\/bubbleTking\/ai-status-watch/);
   assert.match(html, /Inheritance Tax Simulator/);
   assert.match(html, /inheritance-tax-simulator\.html/);
+  assert.match(html, /LearningPacer/);
+  assert.match(html, /https:\/\/learningpacer\.org\//);
+  assert.match(html, /Started Sep 2025/);
+  assert.match(html, /06 live projects/);
+  assert.ok(
+    html.indexOf('<div class="small-project-grid">') <
+      html.indexOf('<article class="presence-feature">')
+  );
+  assert.ok(
+    html.indexOf('<article class="presence-feature">') <
+      html.indexOf('<article class="excel-feature">')
+  );
+  assert.ok(
+    html.indexOf('<article class="excel-feature">') <
+      html.indexOf('<article class="learning-feature">')
+  );
   assert.match(html, /Created 14 May 2026/);
   assert.match(html, /Created 24 May 2026/);
   assert.match(html, /Created 30 Jul 2026/);
