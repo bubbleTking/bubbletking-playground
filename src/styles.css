@@ -799,22 +799,60 @@ nav a {
   font-weight: 800;
 }
 
+.small-project-collection {
+  border: 1px solid var(--ink);
+  border-top: 0;
+  background: #dfdcd5;
+}
+
+.small-project-heading {
+  min-height: 150px;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 30px;
+  padding: 34px;
+  border-bottom: 1px solid var(--ink);
+}
+
+.small-project-heading .kicker {
+  margin-bottom: 10px;
+}
+
+.small-project-heading h3 {
+  max-width: 700px;
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 38px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.small-project-heading > span {
+  color: var(--muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+}
+
 .small-project-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  padding: 12px;
 }
 
 .small-project {
   min-width: 0;
   display: grid;
-  grid-template-rows: 310px 1fr;
+  grid-template-columns: minmax(320px, 0.86fr) minmax(0, 1.14fr);
+  min-height: 390px;
   border: 1px solid var(--ink);
-  border-top: 0;
   background: var(--white);
 }
 
 .small-project + .small-project {
-  border-left: 0;
+  border-left: 1px solid var(--ink);
 }
 
 .status-watch-visual {
@@ -823,7 +861,7 @@ nav a {
   place-items: center;
   overflow: hidden;
   padding: 34px;
-  border-bottom: 1px solid var(--ink);
+  border-right: 1px solid var(--ink);
   background:
     linear-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.12) 1px, transparent 1px),
@@ -969,6 +1007,7 @@ nav a {
 .small-project-copy {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   padding: 34px;
 }
 
@@ -1017,7 +1056,7 @@ nav a {
   justify-content: center;
   overflow: hidden;
   padding: 34px;
-  border-bottom: 1px solid var(--ink);
+  border-right: 1px solid var(--ink);
   background: #f2f0eb;
 }
 
@@ -1665,10 +1704,11 @@ output {
 
   .small-project-grid {
     grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 10px;
   }
 
   .small-project + .small-project {
-    border-top: 0;
     border-left: 1px solid var(--ink);
   }
 
@@ -1679,7 +1719,25 @@ output {
   }
 
   .small-project {
+    grid-template-columns: 1fr;
     grid-template-rows: 290px 1fr;
+  }
+
+  .status-watch-visual,
+  .tax-visual {
+    border-right: 0;
+    border-bottom: 1px solid var(--ink);
+  }
+
+  .small-project-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    min-height: 0;
+    padding: 30px 24px;
+  }
+
+  .small-project-heading h3 {
+    font-size: 34px;
   }
 
   .status-watch-copy h3,
