@@ -24,6 +24,23 @@ const server = createServer(async (request, response) => {
     }
     return;
   }
+  if (url.pathname === "/inheritance-tax-simulator.html") {
+    try {
+      const simulator = await readFile(
+        resolve(root, "public", "inheritance-tax-simulator.html"),
+        "utf8"
+      );
+      response.writeHead(200, {
+        "content-type": "text/html; charset=utf-8",
+        "cache-control": "no-store",
+      });
+      response.end(simulator);
+    } catch {
+      response.writeHead(404);
+      response.end("Not found");
+    }
+    return;
+  }
   if (url.pathname !== "/" && url.pathname !== "/index.html") {
     response.writeHead(404);
     response.end("Not found");
