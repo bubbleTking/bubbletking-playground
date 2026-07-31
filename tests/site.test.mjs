@@ -24,10 +24,6 @@ test("renders the project shelf and interactive demo", async () => {
   assert.match(html, /Started Sep 2025/);
   assert.match(html, /06 live projects/);
   assert.ok(
-    html.indexOf('<div class="small-project-grid">') <
-      html.indexOf('<article class="presence-feature">')
-  );
-  assert.ok(
     html.indexOf('<article class="presence-feature">') <
       html.indexOf('<article class="excel-feature">')
   );
@@ -35,6 +31,11 @@ test("renders the project shelf and interactive demo", async () => {
     html.indexOf('<article class="excel-feature">') <
       html.indexOf('<article class="learning-feature">')
   );
+  assert.ok(
+    html.indexOf('<article class="learning-feature">') <
+      html.indexOf('<section class="small-project-collection"')
+  );
+  assert.match(html, /Compact ideas, still useful/);
   assert.match(html, /Created 14 May 2026/);
   assert.match(html, /Created 24 May 2026/);
   assert.match(html, /Created 30 Jul 2026/);
