@@ -8,8 +8,10 @@ const server = resolve(dist, "server");
 const html = await renderSite(root);
 const ogPath = resolve(root, "public", "og.jpg");
 const presenceCoverPath = resolve(root, "public", "in-presence-cover.jpg");
+const taxSimulatorPath = resolve(root, "public", "inheritance-tax-simulator.html");
 let ogBase64 = "";
 let presenceCoverBase64 = "";
+let taxSimulatorHtml = "";
 
 try {
   ogBase64 = (await readFile(ogPath)).toString("base64");
@@ -23,10 +25,17 @@ try {
   presenceCoverBase64 = "";
 }
 
+try {
+  taxSimulatorHtml = await readFile(taxSimulatorPath, "utf8");
+} catch {
+  taxSimulatorHtml = "";
+}
+
 const worker = `
 const html = ${JSON.stringify(html)};
 const ogBase64 = ${JSON.stringify(ogBase64)};
 const presenceCoverBase64 = ${JSON.stringify(presenceCoverBase64)};
+const taxSimulatorHtml = ${JSON.stringify(taxSimulatorHtml)};
 const headers = {
   "content-type": "text/html; charset=utf-8",
   "cache-control": "public, max-age=300",
@@ -52,6 +61,14 @@ export default {
         headers: {
           "content-type": "image/jpeg",
           "cache-control": "public, max-age=86400"
+        }
+      });
+    }
+    if (url.pathname === "/inheritance-tax-simulator.html" && taxSimulatorHtml) {
+      return new Response(taxSimulatorHtml, {
+        headers: {
+          ...headers,
+          "cache-control": "public, max-age=3600"
         }
       });
     }
