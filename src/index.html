@@ -34,8 +34,13 @@
         </span>
       </a>
       <nav aria-label="Main navigation">
-        <a href="#shelf">Projects</a>
-        <a href="#about">About</a>
+        <a href="#shelf" data-i18n="nav.projects">Projects</a>
+        <a href="#about" data-i18n="nav.about">About</a>
+        <div class="language-switch" role="group" aria-label="Language">
+          <button class="language-option is-active" type="button" data-language="en" aria-pressed="true">EN</button>
+          <span aria-hidden="true">/</span>
+          <button class="language-option" type="button" data-language="zh-CN" aria-pressed="false">中文</button>
+        </div>
         <a
           class="github-link"
           href="https://github.com/bubbleTking"
@@ -47,51 +52,52 @@
 
     <main id="top">
       <section class="intro" aria-labelledby="intro-title">
-        <p class="kicker">A tiny corner of the internet</p>
-        <h1 id="intro-title">Useful tools.<br /><span>Playable ideas.</span></h1>
-        <p class="intro-copy">
+        <p class="kicker" data-i18n="intro.kicker">A tiny corner of the internet</p>
+        <h1 id="intro-title" data-i18n-html="intro.title">Useful tools.<br /><span>Playable ideas.</span></h1>
+        <p class="intro-copy" data-i18n="intro.copy">
           I build small software for annoyances, curiosities, and habits worth
           changing. Everything on this shelf is meant to be opened.
         </p>
-        <a class="down-link" href="#shelf">Open the shelf ↓</a>
+        <a class="down-link" href="#shelf" data-i18n="intro.open">Open the shelf ↓</a>
       </section>
 
       <section class="shelf-section" id="shelf" aria-labelledby="shelf-title">
         <div class="section-heading">
           <div>
-            <p class="kicker">Shelf 01</p>
-            <h2 id="shelf-title">Things you can try</h2>
+            <p class="kicker" data-i18n="shelf.kicker">Shelf 01</p>
+            <h2 id="shelf-title" data-i18n="shelf.title">Things you can try</h2>
           </div>
-          <span class="count">03 live projects</span>
+          <span class="count" data-i18n="shelf.count">05 live projects</span>
         </div>
 
         <article class="project-feature">
           <div class="project-copy">
             <div class="project-meta">
               <span class="status-dot"></span>
-              <span>macOS alpha · local-first</span>
+              <span data-i18n="guardian.meta">macOS alpha · local-first</span>
+              <time datetime="2026-07-30" data-i18n="guardian.date">Created 30 Jul 2026</time>
             </div>
-            <h3>Hearing<br />Guardian</h3>
-            <p>
+            <h3 data-i18n-html="guardian.title">Hearing<br />Guardian</h3>
+            <p data-i18n="guardian.copy">
               A quiet menu-bar companion that counts real headphone listening
               time, schedules breaks, and keeps every bit of data on your Mac.
             </p>
             <div class="project-actions">
               <button class="primary-action" id="try-demo" type="button">
-                <span aria-hidden="true">▶</span> Try the demo
+                <span aria-hidden="true">▶</span> <span data-i18n="actions.tryDemo">Try the demo</span>
               </button>
               <a
                 class="secondary-action"
                 href="https://github.com/bubbleTking/hearing-guardian"
                 target="_blank"
                 rel="noreferrer"
-              >View source ↗</a>
+              ><span data-i18n="actions.viewSource">View source ↗</span></a>
             </div>
             <ul class="feature-list" aria-label="Project features">
-              <li>Actual playback time</li>
-              <li>Automatic breaks</li>
-              <li>Volume reminders</li>
-              <li>No accounts or cloud</li>
+              <li data-i18n="guardian.feature1">Actual playback time</li>
+              <li data-i18n="guardian.feature2">Automatic breaks</li>
+              <li data-i18n="guardian.feature3">Volume reminders</li>
+              <li data-i18n="guardian.feature4">No accounts or cloud</li>
             </ul>
           </div>
 
@@ -101,7 +107,7 @@
             type="button"
             aria-label="Open the Hearing Guardian interactive demo"
           >
-            <span class="visual-label">LIVE PREVIEW</span>
+            <span class="visual-label" data-i18n="preview.live">LIVE PREVIEW</span>
             <span class="mac-window">
               <span class="window-bar">
                 <i></i><i></i><i></i>
@@ -109,16 +115,16 @@
               </span>
               <span class="window-content">
                 <span class="ear-mark">◖))</span>
-                <strong>Waiting for music</strong>
+                <strong data-i18n="preview.waiting">Waiting for music</strong>
                 <small>AirPods Pro · Spotify</small>
                 <span class="progress-track"><i></i></span>
                 <span class="window-stats">
-                  <span><b>00:00</b><small>listening</small></span>
-                  <span><b>62%</b><small>volume</small></span>
+                  <span><b>00:00</b><small data-i18n="preview.listening">listening</small></span>
+                  <span><b>62%</b><small data-i18n="preview.volume">volume</small></span>
                 </span>
               </span>
             </span>
-            <span class="visual-hint">Click to play with it</span>
+            <span class="visual-hint" data-i18n="preview.click">Click to play with it</span>
           </button>
         </article>
 
@@ -141,11 +147,12 @@
           <div class="presence-copy">
             <div class="project-meta presence-meta">
               <span class="status-dot"></span>
-              <span>Playable concept · AI-native long video</span>
+              <span data-i18n="presence.meta">Playable concept · AI-native long video</span>
+              <time datetime="2026-05-24" data-i18n="presence.date">Created 24 May 2026</time>
             </div>
             <p class="presence-cn" lang="zh-CN">在场</p>
             <h3>In Presence</h3>
-            <p>
+            <p data-i18n="presence.copy">
               An interactive murder mystery aboard a snowbound train. Watch six
               episodes, collect evidence, interrogate suspects, connect clues,
               and decide whose story survives.
@@ -156,14 +163,14 @@
                 href="https://bucolic-eclair-b6f8f1.netlify.app/"
                 target="_blank"
                 rel="noreferrer"
-              ><span aria-hidden="true">↗</span> Open full experience</a>
-              <span class="project-note">Original Netlify app · 6 episodes</span>
+              ><span aria-hidden="true">↗</span> <span data-i18n="actions.openExperience">Open full experience</span></a>
+              <span class="project-note" data-i18n="presence.note">Original Netlify app · 6 episodes</span>
             </div>
             <ul class="feature-list" aria-label="In Presence features">
-              <li>6 story episodes</li>
-              <li>Clue combinations</li>
-              <li>Suspect interviews</li>
-              <li>Multiple perspectives</li>
+              <li data-i18n="presence.feature1">6 story episodes</li>
+              <li data-i18n="presence.feature2">Clue combinations</li>
+              <li data-i18n="presence.feature3">Suspect interviews</li>
+              <li data-i18n="presence.feature4">Multiple perspectives</li>
             </ul>
           </div>
         </article>
@@ -172,11 +179,12 @@
           <div class="excel-copy">
             <div class="project-meta">
               <span class="status-dot"></span>
-              <span>Live web app · files stay in your browser</span>
+              <span data-i18n="excel.meta">Live web app · files stay in your browser</span>
+              <time datetime="2026-05-14" data-i18n="excel.date">Created 14 May 2026</time>
             </div>
             <span class="excel-index">03 / PRODUCTIVITY</span>
             <h3>Excel Diff<br />Studio</h3>
-            <p>
+            <p data-i18n="excel.copy">
               Drop in two spreadsheets and see every changed cell, sheet, old
               value, and new value. The comparison runs locally in the browser,
               so your files are never uploaded.
@@ -187,18 +195,18 @@
                 href="https://excel-diff-studio.netlify.app/"
                 target="_blank"
                 rel="noreferrer"
-              ><span aria-hidden="true">↗</span> Open web app</a>
+              ><span aria-hidden="true">↗</span> <span data-i18n="actions.openWebApp">Open web app</span></a>
               <a
                 class="secondary-action"
                 href="https://github.com/bubbleTking/excel-diff-studio"
                 target="_blank"
                 rel="noreferrer"
-              >View source ↗</a>
+              ><span data-i18n="actions.viewSource">View source ↗</span></a>
             </div>
             <ul class="feature-list" aria-label="Excel Diff Studio features">
               <li>XLSX, XLSM, XLS & CSV</li>
-              <li>Sheet filters</li>
-              <li>Formula comparison</li>
+              <li data-i18n="excel.feature2">Sheet filters</li>
+              <li data-i18n="excel.feature3">Formula comparison</li>
               <li>中文 / English</li>
             </ul>
           </div>
@@ -243,23 +251,130 @@
           </a>
         </article>
 
+        <div class="small-project-grid">
+        <article class="status-watch-feature small-project">
+          <div class="status-watch-visual" aria-hidden="true">
+            <span class="browser-frame">
+              <span class="browser-bar">
+                <i></i><i></i><i></i>
+                <b>AI Status Watch</b>
+              </span>
+              <span class="extension-popup">
+                <span class="extension-heading">
+                  <strong>AI Status</strong>
+                  <small>REFRESH</small>
+                </span>
+                <span class="service-status">
+                  <b>OpenAI</b><em>OK</em><small>Recovered</small>
+                </span>
+                <span class="service-status">
+                  <b>Claude</b><em>OK</em><small>Recovered</small>
+                </span>
+                <span class="service-status has-incident">
+                  <b>DeepSeek</b><em>ERROR</em><small>Model: R1 · investigating</small>
+                </span>
+                <span class="last-check">Last checked just now</span>
+              </span>
+            </span>
+            <span class="status-alert">
+              <i></i>
+              <span>DeepSeek: error<br /><small>Model R1 · investigating</small></span>
+              <b>×</b>
+            </span>
+          </div>
+
+          <div class="status-watch-copy">
+            <div class="project-meta">
+              <span class="status-dot"></span>
+              <span data-i18n="status.meta">Chrome extension · local monitoring</span>
+              <time datetime="2026-07-30" data-i18n="status.date">Created 30 Jul 2026</time>
+            </div>
+            <span class="status-index">04 / UTILITY</span>
+            <h3>AI Status<br />Watch</h3>
+            <p data-i18n="status.copy">
+              Keep an eye on OpenAI, Claude, and DeepSeek without repeatedly
+              checking status pages. Get a quiet browser alert when an incident
+              changes.
+            </p>
+            <div class="project-actions">
+              <a
+                class="primary-action status-action"
+                href="https://github.com/bubbleTking/ai-status-watch"
+                target="_blank"
+                rel="noreferrer"
+              ><span aria-hidden="true">↗</span> <span data-i18n="actions.getExtension">Get extension</span></a>
+              <a
+                class="secondary-action status-source"
+                href="https://github.com/bubbleTking/ai-status-watch"
+                target="_blank"
+                rel="noreferrer"
+              ><span data-i18n="actions.viewSource">View source ↗</span></a>
+            </div>
+            <ul class="feature-list" aria-label="AI Status Watch features">
+              <li data-i18n="status.feature1">OpenAI, Claude & DeepSeek</li>
+              <li data-i18n="status.feature2">2-minute checks</li>
+              <li data-i18n="status.feature3">Incident notifications</li>
+              <li data-i18n="status.feature4">No telemetry</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="tax-feature small-project">
+          <div class="tax-visual" aria-hidden="true">
+            <span class="tax-heading">Inheritance Tax</span>
+            <span class="tax-subheading">SUCCESSION IMPACT SIMULATOR</span>
+            <span class="tax-controls">
+              <span><small>TAX RATE</small><b>60%</b><i style="--value: 100%"></i></span>
+              <span><small>LIQUIDITY</small><b>5%</b><i style="--value: 13%"></i></span>
+              <span><small>STRUCTURE</small><b>Chaebol</b><i style="--value: 92%"></i></span>
+            </span>
+            <span class="tax-result">
+              <span><small>CONTROL BEFORE</small><b>96%</b></span>
+              <i>→</i>
+              <span><small>CONTROL AFTER</small><b>42%</b></span>
+            </span>
+          </div>
+          <div class="small-project-copy">
+            <div class="project-meta">
+              <span class="status-dot"></span>
+              <span data-i18n="tax.meta">Interactive finance concept</span>
+              <time datetime="2026-03-24" data-i18n="tax.date">Created 24 Mar 2026</time>
+            </div>
+            <span class="small-project-index">05 / SIMULATOR</span>
+            <h3 data-i18n="tax.title">Inheritance Tax Simulator</h3>
+            <p data-i18n="tax.copy">
+              Explore how tax rate, liquidity, ownership structure, and policy
+              relief can reshape family control during business succession.
+            </p>
+            <div class="project-actions">
+              <a
+                class="primary-action tax-action"
+                href="inheritance-tax-simulator.html"
+                target="_blank"
+                rel="noreferrer"
+              ><span aria-hidden="true">↗</span> <span data-i18n="actions.openSimulator">Open simulator</span></a>
+            </div>
+          </div>
+        </article>
+        </div>
+
         <div class="future-shelf" aria-label="Future project slots">
           <div class="empty-slot">
-            <span>04</span>
-            <p>DuoLive concept</p>
+            <span>06</span>
+            <p data-i18n="future.duolive">DuoLive concept</p>
           </div>
           <div class="empty-slot">
-            <span>05</span>
-            <p>Next useful thing</p>
+            <span>07</span>
+            <p data-i18n="future.next">Next useful thing</p>
           </div>
         </div>
       </section>
 
       <section class="about" id="about" aria-labelledby="about-title">
-        <p class="kicker">About this place</p>
+        <p class="kicker" data-i18n="about.kicker">About this place</p>
         <div>
-          <h2 id="about-title">Built to be used,<br />not just scrolled past.</h2>
-          <p>
+          <h2 id="about-title" data-i18n-html="about.title">Built to be used,<br />not just scrolled past.</h2>
+          <p data-i18n="about.copy">
             This is my public workbench: part app store, part playground. Each
             project starts with a real problem and stays small enough to remain
             understandable.
@@ -270,14 +385,14 @@
 
     <footer>
       <span>© 2026 bubbleTking</span>
-      <span>Small software, made in public.</span>
+      <span data-i18n="footer.tagline">Small software, made in public.</span>
     </footer>
 
     <dialog class="demo-dialog" id="demo-dialog">
       <div class="demo-shell">
         <header class="demo-header">
           <div>
-            <p class="kicker">Interactive demo</p>
+            <p class="kicker" data-i18n="demo.kicker">Interactive demo</p>
             <h2>Hearing Guardian</h2>
           </div>
           <button class="icon-button" id="close-demo" type="button" aria-label="Close demo" title="Close">
@@ -290,41 +405,41 @@
             <div class="guardian-state">
               <span class="demo-ear" aria-hidden="true">◖))</span>
               <div>
-                <small id="demo-device">Headphones connected</small>
-                <h3 id="demo-state">Ready to listen</h3>
+                <small id="demo-device" data-i18n="demo.headphonesConnected">Headphones connected</small>
+                <h3 id="demo-state" data-i18n="demo.ready">Ready to listen</h3>
               </div>
             </div>
 
             <div class="timer-ring" id="timer-ring">
               <div>
                 <strong id="demo-timer">00:00</strong>
-                <span id="demo-timer-label">until break</span>
+                <span id="demo-timer-label" data-i18n="demo.untilBreak">until break</span>
               </div>
             </div>
 
             <div class="demo-facts">
-              <span><small>Player</small><strong id="demo-player">Paused</strong></span>
-              <span><small>Output</small><strong id="demo-volume-readout">62%</strong></span>
-              <span><small>Mode</small><strong id="demo-mode">Listening</strong></span>
+              <span><small data-i18n="demo.player">Player</small><strong id="demo-player" data-i18n="demo.paused">Paused</strong></span>
+              <span><small data-i18n="demo.output">Output</small><strong id="demo-volume-readout">62%</strong></span>
+              <span><small data-i18n="demo.mode">Mode</small><strong id="demo-mode" data-i18n="demo.listening">Listening</strong></span>
             </div>
           </section>
 
           <aside class="demo-controls">
             <div class="control-block">
-              <label for="volume-slider">Output volume</label>
+              <label for="volume-slider" data-i18n="demo.outputVolume">Output volume</label>
               <div class="slider-row">
                 <input id="volume-slider" type="range" min="0" max="100" value="62" />
                 <output id="volume-output" for="volume-slider">62%</output>
               </div>
-              <p class="volume-warning" id="volume-warning" hidden>
+              <p class="volume-warning" id="volume-warning" hidden data-i18n="demo.loudWarning">
                 That is a loud setting for a long session.
               </p>
             </div>
 
             <div class="control-block toggle-row">
               <span>
-                <strong>Headphones</strong>
-                <small>Only connected audio counts</small>
+                <strong data-i18n="demo.headphones">Headphones</strong>
+                <small data-i18n="demo.onlyConnected">Only connected audio counts</small>
               </span>
               <button
                 class="switch is-on"
@@ -337,27 +452,27 @@
 
             <div class="demo-buttons">
               <button class="primary-action" id="play-toggle" type="button">
-                <span aria-hidden="true">▶</span> Start music
+                <span aria-hidden="true">▶</span> <span data-i18n="demo.startMusic">Start music</span>
               </button>
               <button class="reset-button" id="reset-demo" type="button" title="Reset demo">
                 ↻
               </button>
             </div>
 
-            <p class="demo-note">
+            <p class="demo-note" data-i18n="demo.note">
               Demo timing is compressed: 12 seconds listening, then a 6 second break.
             </p>
           </aside>
         </div>
 
         <footer class="demo-footer">
-          <span>Like the behavior?</span>
+          <span data-i18n="demo.like">Like the behavior?</span>
           <div>
             <a
               href="https://github.com/bubbleTking/hearing-guardian/releases/latest"
               target="_blank"
               rel="noreferrer"
-            >Download for macOS ↗</a>
+            ><span data-i18n="demo.download">Download for macOS ↗</span></a>
             <a
               href="https://github.com/bubbleTking/hearing-guardian"
               target="_blank"
