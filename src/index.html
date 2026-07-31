@@ -123,7 +123,13 @@
         </article>
 
         <article class="presence-feature">
-          <div class="presence-art">
+          <a
+            class="presence-art"
+            href="https://bucolic-eclair-b6f8f1.netlify.app/"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Open the full In Presence experience"
+          >
             <img
               src="in-presence-cover.jpg"
               alt="In Presence, an interactive mystery set aboard a mountain train"
@@ -131,7 +137,7 @@
               height="1088"
             />
             <span class="presence-index">02 / INTERACTIVE STORY</span>
-          </div>
+          </a>
           <div class="presence-copy">
             <div class="project-meta presence-meta">
               <span class="status-dot"></span>
@@ -145,10 +151,13 @@
               and decide whose story survives.
             </p>
             <div class="project-actions">
-              <button class="primary-action presence-action" id="try-presence" type="button">
-                <span aria-hidden="true">⌕</span> Enter the case
-              </button>
-              <span class="project-note">Case preview · no sign-in</span>
+              <a
+                class="primary-action presence-action"
+                href="https://bucolic-eclair-b6f8f1.netlify.app/"
+                target="_blank"
+                rel="noreferrer"
+              ><span aria-hidden="true">↗</span> Open full experience</a>
+              <span class="project-note">Original Netlify app · 6 episodes</span>
             </div>
             <ul class="feature-list" aria-label="In Presence features">
               <li>6 story episodes</li>
@@ -356,77 +365,6 @@
             >GitHub ↗</a>
           </div>
         </footer>
-      </div>
-    </dialog>
-
-    <dialog class="presence-dialog" id="presence-dialog">
-      <div class="presence-shell">
-        <header class="presence-dialog-header">
-          <div>
-            <p class="kicker">Case file 01 · Snowbound train</p>
-            <h2><span lang="zh-CN">在场</span> / In Presence</h2>
-          </div>
-          <button
-            class="icon-button presence-close"
-            id="close-presence"
-            type="button"
-            aria-label="Close case preview"
-            title="Close"
-          >×</button>
-        </header>
-
-        <div class="presence-stage">
-          <section class="case-scene">
-            <img
-              src="in-presence-cover.jpg"
-              alt=""
-              width="1904"
-              height="1088"
-            />
-            <div class="case-overlay">
-              <span>22:41 · Observation car</span>
-              <strong id="case-headline">A passenger is missing.</strong>
-              <p id="case-copy">
-                The train cannot stop until morning. Everyone in this carriage
-                remembers the evening differently.
-              </p>
-            </div>
-          </section>
-
-          <aside class="case-board">
-            <div class="case-progress">
-              <span>CASE PROGRESS</span>
-              <strong id="clue-count">0 / 3 clues</strong>
-            </div>
-            <div class="episode-track" aria-label="Six episode story">
-              <span class="is-current">1</span><span>2</span><span>3</span>
-              <span>4</span><span>5</span><span>6</span>
-            </div>
-            <div class="case-actions" id="case-actions">
-              <button type="button" data-clue="ticket">
-                <span>01</span>
-                <strong>Inspect the torn ticket</strong>
-                <small>Found beneath seat 12A</small>
-              </button>
-              <button type="button" data-clue="glass">
-                <span>02</span>
-                <strong>Examine the second glass</strong>
-                <small>Still warm to the touch</small>
-              </button>
-              <button type="button" data-clue="witness">
-                <span>03</span>
-                <strong>Question the conductor</strong>
-                <small>His timeline does not match</small>
-              </button>
-            </div>
-            <button class="connect-button" id="connect-clues" type="button" disabled>
-              Connect the evidence
-            </button>
-            <p class="case-result" id="case-result" aria-live="polite">
-              Choose evidence to build your theory.
-            </p>
-          </aside>
-        </div>
       </div>
     </dialog>
 
