@@ -15,6 +15,15 @@ test("renders the project shelf and interactive demo", async () => {
   assert.match(html, /Excel Diff Studio/);
   assert.match(html, /https:\/\/excel-diff-studio\.netlify\.app\//);
   assert.match(html, /Open web app/);
+  assert.match(html, /AI Status Watch/);
+  assert.match(html, /https:\/\/github\.com\/bubbleTking\/ai-status-watch/);
+  assert.match(html, /Inheritance Tax Simulator/);
+  assert.match(html, /inheritance-tax-simulator\.html/);
+  assert.match(html, /Created 14 May 2026/);
+  assert.match(html, /Created 24 May 2026/);
+  assert.match(html, /Created 30 Jul 2026/);
+  assert.match(html, /data-language="zh-CN"/);
+  assert.match(html, /可以体验的作品/);
   assert.match(html, /Interactive demo/);
   assert.doesNotMatch(html, /__CSS__|__JS__/);
 });
@@ -26,4 +35,5 @@ test("build emits a Sites worker", async () => {
   );
   assert.match(worker, /export default/);
   assert.match(worker, /new Response/);
+  assert.match(worker, /inheritance-tax-simulator\.html/);
 });
