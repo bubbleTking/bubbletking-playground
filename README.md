@@ -8,6 +8,7 @@ static portfolio screenshots.
 
 - **Hearing Guardian**: a local-first macOS listening-break companion.
 - **In Presence / 在场**: an AI-native interactive mystery experience.
+- **Excel Diff Studio**: a private, browser-based spreadsheet comparison tool.
 
 ## Run locally
 
