@@ -9,7 +9,9 @@ test("renders the project shelf and interactive demo", async () => {
   assert.match(html, /bubbleTking's Playground/);
   assert.match(html, /Hearing Guardian/);
   assert.match(html, /In Presence/);
-  assert.match(html, /Enter the case/);
+  assert.match(html, /Open full experience/);
+  assert.match(html, /https:\/\/bucolic-eclair-b6f8f1\.netlify\.app\//);
+  assert.doesNotMatch(html, /presence-dialog|Connect the evidence/);
   assert.match(html, /Excel Diff Studio/);
   assert.match(html, /https:\/\/excel-diff-studio\.netlify\.app\//);
   assert.match(html, /Open web app/);
