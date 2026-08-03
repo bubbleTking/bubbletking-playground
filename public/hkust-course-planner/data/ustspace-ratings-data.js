@@ -1,0 +1,1 @@
+window.USTSPACE_RATINGS=window.USTSPACE_RATINGS||{};

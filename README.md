@@ -15,6 +15,7 @@ visitor's language choice.
 - **In Presence / 在场**: an AI-native interactive mystery experience.
 - **Excel Diff Studio**: a private, browser-based spreadsheet comparison tool.
 - **LearningPacer**: an HKUST FYP and course-grounded AI teaching assistant.
+- **HKUST Course Planner**: an early timetable planner with smart scheduling, quota, waitlists, and course-history checks.
 
 ## Run locally
 

@@ -15,7 +15,7 @@
       content="A playable shelf of small tools and experiments."
     />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="og.jpg" />
+    <meta property="og:image" content="og.png" />
     <meta name="twitter:card" content="summary_large_image" />
     <style>__CSS__</style>
   </head>
@@ -67,7 +67,7 @@
             <p class="kicker" data-i18n="shelf.kicker">Shelf 01</p>
             <h2 id="shelf-title" data-i18n="shelf.title">Things you can try</h2>
           </div>
-          <span class="count" data-i18n="shelf.count">06 live projects</span>
+          <span class="count" data-i18n="shelf.count">07 live projects</span>
         </div>
 
         <article class="project-feature">
@@ -300,6 +300,60 @@
               <li data-i18n="learning.feature4">Answer comparison</li>
             </ul>
           </div>
+        </article>
+
+        <article class="planner-feature">
+          <div class="planner-copy">
+            <div class="project-meta planner-meta">
+              <span class="status-dot"></span>
+              <span data-i18n="planner.meta">Live web app · HKUST course planning</span>
+              <time datetime="2026-08-03" data-i18n="planner.date">Created 3 Aug 2026</time>
+            </div>
+            <p class="planner-course">HKUST / 2026-27 FALL</p>
+            <h3>Course<br />Planner</h3>
+            <p data-i18n="planner.copy">
+              Build a timetable before the official planner opens. Search every
+              published course, add matched lectures and tutorials, compare
+              quota and waitlists, and optimize the week around your routine.
+            </p>
+            <div class="project-actions">
+              <a class="primary-action planner-action" href="/hkust-course-planner/">
+                <span aria-hidden="true">→</span>
+                <span data-i18n="actions.openPlanner">Open course planner</span>
+              </a>
+              <a class="secondary-action planner-source" href="https://github.com/bubbleTking/hkust-course-planner" target="_blank" rel="noreferrer">
+                <span data-i18n="actions.viewSource">View source ↗</span>
+              </a>
+            </div>
+            <ul class="feature-list" aria-label="HKUST Course Planner features">
+              <li data-i18n="planner.feature1">Smart schedule modes</li>
+              <li data-i18n="planner.feature2">Quota and waitlists</li>
+              <li data-i18n="planner.feature3">Prerequisite checks</li>
+              <li data-i18n="planner.feature4">Four semesters</li>
+            </ul>
+          </div>
+          <a class="planner-visual" href="/hkust-course-planner/" aria-label="Open HKUST Course Planner">
+            <span class="planner-live">LIVE PLANNER</span>
+            <span class="planner-window">
+              <span class="planner-window-bar"><b>HKUST Course Planner</b><small>12 credits</small></span>
+              <span class="planner-window-body">
+                <span class="planner-mini-sidebar">
+                  <i>ELEC3120</i>
+                  <b>ELEC 3120</b><small>Computer Communication Networks</small>
+                  <b>COMP 2011</b><small>Programming with C++</small>
+                  <b>MATH 2011</b><small>Multivariable Calculus</small>
+                </span>
+                <span class="planner-mini-calendar">
+                  <span class="planner-days"><b>MON</b><b>TUE</b><b>WED</b><b>THU</b><b>FRI</b></span>
+                  <span class="planner-grid"></span>
+                  <i class="planner-event event-one">ELEC 3120<br /><small>13:30</small></i>
+                  <i class="planner-event event-two">COMP 2011<br /><small>10:30</small></i>
+                  <i class="planner-event event-three">MATH 2011<br /><small>15:00</small></i>
+                </span>
+              </span>
+            </span>
+            <span class="planner-hint">Plan before enrollment opens →</span>
+          </a>
         </article>
 
         <section class="small-project-collection" aria-labelledby="small-projects-title">

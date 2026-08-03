@@ -6,7 +6,7 @@ const root = process.cwd();
 const dist = resolve(root, "dist");
 const server = resolve(dist, "server");
 const html = await renderSite(root);
-const ogPath = resolve(root, "public", "og.jpg");
+const ogPath = resolve(root, "public", "og.png");
 const presenceCoverPath = resolve(root, "public", "in-presence-cover.jpg");
 const taxSimulatorPath = resolve(root, "public", "inheritance-tax-simulator.html");
 let ogBase64 = "";
@@ -46,11 +46,11 @@ const headers = {
 export default {
   async fetch(request) {
     const url = new URL(request.url);
-    if (url.pathname === "/og.jpg" && ogBase64) {
+    if (url.pathname === "/og.png" && ogBase64) {
       const bytes = Uint8Array.from(atob(ogBase64), c => c.charCodeAt(0));
       return new Response(bytes, {
         headers: {
-          "content-type": "image/jpeg",
+          "content-type": "image/png",
           "cache-control": "public, max-age=86400"
         }
       });
@@ -82,9 +82,15 @@ export default {
 
 await mkdir(server, { recursive: true });
 await mkdir(resolve(dist, ".openai"), { recursive: true });
+await mkdir(resolve(dist, "static"), { recursive: true });
 await writeFile(resolve(server, "index.js"), worker.trimStart(), "utf8");
 await cp(
   resolve(root, ".openai", "hosting.json"),
   resolve(dist, ".openai", "hosting.json")
+);
+await cp(
+  resolve(root, "public", "hkust-course-planner"),
+  resolve(dist, "static", "hkust-course-planner"),
+  { recursive: true }
 );
 console.log("Built bubbleTking's Playground");

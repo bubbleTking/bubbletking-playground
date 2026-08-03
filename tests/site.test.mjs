@@ -22,7 +22,11 @@ test("renders the project shelf and interactive demo", async () => {
   assert.match(html, /LearningPacer/);
   assert.match(html, /https:\/\/learningpacer\.org\//);
   assert.match(html, /Started Sep 2025/);
-  assert.match(html, /06 live projects/);
+  assert.match(html, /HKUST Course Planner/);
+  assert.match(html, /\/hkust-course-planner\//);
+  assert.match(html, /Quota and waitlists/);
+  assert.match(html, /07 live projects/);
+  assert.match(html, /og\.png/);
   assert.ok(
     html.indexOf('<article class="presence-feature">') <
       html.indexOf('<article class="excel-feature">')
@@ -53,4 +57,15 @@ test("build emits a Sites worker", async () => {
   assert.match(worker, /export default/);
   assert.match(worker, /new Response/);
   assert.match(worker, /inheritance-tax-simulator\.html/);
+  const planner = await readFile(
+    resolve(import.meta.dirname, "..", "dist", "static", "hkust-course-planner", "index.html"),
+    "utf8"
+  );
+  assert.match(planner, /HKUST Course Planner/);
+  assert.doesNotMatch(planner, /courses-data\.js/);
+  const terms = await readFile(
+    resolve(import.meta.dirname, "..", "dist", "static", "hkust-course-planner", "data", "terms-data.js"),
+    "utf8"
+  );
+  assert.match(terms, /2026-27 Fall/);
 });
