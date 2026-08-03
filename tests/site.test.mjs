@@ -23,7 +23,7 @@ test("renders the project shelf and interactive demo", async () => {
   assert.match(html, /https:\/\/learningpacer\.org\//);
   assert.match(html, /Started Sep 2025/);
   assert.match(html, /HKUST Course Planner/);
-  assert.match(html, /\/hkust-course-planner\//);
+  assert.match(html, /href="hkust-course-planner\/"/);
   assert.match(html, /Quota and waitlists/);
   assert.match(html, /07 live projects/);
   assert.match(html, /og\.png/);
