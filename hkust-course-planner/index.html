@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HKUST Course Planner</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <h1>HKUST Course Planner</h1>
+      <p id="termSubtitle">Early timetable planning from HKUST's public Class Schedule & Quota pages.</p>
+    </div>
+    <div class="topActions">
+      <a class="playgroundBack" href="../">Back to playground</a>
+      <button id="historyButton" class="secondaryButton" type="button">Course history <span id="historyCount">0</span></button>
+      <div class="summary">
+      <div>
+        <span id="creditTotal">0</span>
+        <small>credits</small>
+      </div>
+      <div>
+        <span id="sectionTotal">0</span>
+        <small>classes</small>
+      </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="layout">
+    <aside class="sidebar">
+      <div class="searchPanel">
+        <div class="termRow">
+          <div>
+            <label for="termSelect">Semester</label>
+            <select id="termSelect" aria-label="Semester"></select>
+          </div>
+          <button id="reloadButton" class="iconButton" type="button" title="Reload this semester" aria-label="Reload this semester">&#8635;</button>
+        </div>
+        <label for="searchInput">Search courses</label>
+        <input id="searchInput" type="search" placeholder="ELEC3120, COMP 2011, instructor..." autocomplete="off">
+        <div class="filters">
+          <select id="subjectFilter" aria-label="Subject filter">
+            <option value="">All subjects</option>
+          </select>
+          <select id="levelFilter" aria-label="Level filter">
+            <option value="">All levels</option>
+            <option value="1">1000 level</option>
+            <option value="2">2000 level</option>
+            <option value="3">3000 level</option>
+            <option value="4">4000 level</option>
+            <option value="5">5000 level</option>
+            <option value="6">6000+ level</option>
+          </select>
+          <select id="availabilityFilter" aria-label="Availability filter">
+            <option value="">Any availability</option>
+            <option value="open">Has open bundle</option>
+            <option value="waitlist">Full / waitlist</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="sourceNote" id="sourceNote">Loading course data...</div>
+      <div class="courseList" id="courseList"></div>
+    </aside>
+
+    <section class="planner">
+      <div class="selectedBar">
+        <div>
+          <h2>Planned Courses</h2>
+          <p id="selectedHint">Add a best-fit course bundle to start building your week.</p>
+        </div>
+        <div class="selectedBarActions">
+          <button id="optimizePlanButton" class="primaryButton" type="button">Optimize plan</button>
+          <button id="clearButton" type="button">Clear</button>
+        </div>
+      </div>
+      <div class="recommendationBar" aria-label="Recommendation preference">
+        <span>Smart recommendation</span>
+        <div class="modeControl" id="modeControl">
+          <button type="button" data-mode="chill">Chill</button>
+          <button type="button" data-mode="harsh">Harsh</button>
+          <button type="button" data-mode="night">Night</button>
+          <button type="button" data-mode="morning">Morning</button>
+          <button type="button" data-mode="grade">Good grade</button>
+        </div>
+        <small id="modeDescription"></small>
+      </div>
+      <div class="selectedList" id="selectedList"></div>
+      <div class="alerts" id="alerts"></div>
+
+      <div class="calendarWrap">
+        <div class="calendarHeader">
+          <h2>Weekly Timetable</h2>
+          <div class="legend">
+            <span class="dot lecture"></span> Lecture
+            <span class="dot tutorial"></span> Tutorial/Lab
+          </div>
+        </div>
+        <div class="calendar" id="calendar"></div>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="historyDialog" class="historyDialog">
+    <form method="dialog" class="dialogHeader">
+      <div>
+        <h2>Student profile</h2>
+        <p>Saved only in this browser.</p>
+      </div>
+      <button class="iconButton" type="submit" aria-label="Close" title="Close">&#215;</button>
+    </form>
+    <div class="profileTabs" role="tablist">
+      <button type="button" class="active" data-profile-tab="history">Course history</button>
+      <button type="button" data-profile-tab="ratings">USTspace ratings</button>
+    </div>
+    <section class="profilePanel active" data-profile-panel="history">
+      <label for="historyInput">Paste My Course History</label>
+      <textarea id="historyInput" placeholder="Paste the table copied from SIS, including course, term, grade and status..."></textarea>
+      <input id="historyFile" class="fileInput" type="file" accept=".txt,.csv,.json" aria-label="Upload course history file">
+      <div class="dialogActions">
+        <button id="clearHistoryButton" class="secondaryButton" type="button">Clear history</button>
+        <button id="importHistoryButton" class="primaryButton" type="button">Import history</button>
+      </div>
+      <div id="historyResult" class="importResult"></div>
+      <div id="historyList" class="historyList"></div>
+    </section>
+    <section class="profilePanel" data-profile-panel="ratings">
+      <p class="panelNote">USTspace requires a student login, so ratings are imported privately. Paste one course per line, for example <strong>COMP 2011 B-</strong>, or import the JSON made by the included refresh script.</p>
+      <a class="secondaryButton loginLink" href="https://ust.space/login" target="_blank" rel="noreferrer">Open USTspace sign in</a>
+      <label for="ratingsInput">Course grading ratings</label>
+      <textarea id="ratingsInput" placeholder="COMP 2011 B-&#10;ELEC 3120 C+&#10;or paste exported JSON"></textarea>
+      <input id="ratingsFile" class="fileInput" type="file" accept=".txt,.csv,.json" aria-label="Upload USTspace ratings file">
+      <div class="dialogActions">
+        <button id="clearRatingsButton" class="secondaryButton" type="button">Clear ratings</button>
+        <button id="importRatingsButton" class="primaryButton" type="button">Import ratings</button>
+      </div>
+      <div id="ratingsResult" class="importResult"></div>
+      <div id="ratingsList" class="historyList"></div>
+    </section>
+  </dialog>
+
+  <script src="data/terms-data.js"></script>
+  <script src="data/ustspace-ratings-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
