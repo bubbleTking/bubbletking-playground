@@ -8,6 +8,12 @@ test("renders the project shelf and interactive demo", async () => {
   const html = await renderSite(resolve(import.meta.dirname, ".."));
   assert.match(html, /bubbleTking's Playground/);
   assert.match(html, /Hearing Guardian/);
+  assert.match(html, /macOS v0\.3\.1/);
+  assert.match(html, /Weekly Listening Postcards/);
+  assert.match(
+    html,
+    /releases\/download\/v0\.3\.1\/Hearing-Guardian-v0\.3\.1-macOS\.zip/
+  );
   assert.match(html, /In Presence/);
   assert.match(html, /Open full experience/);
   assert.match(html, /https:\/\/bucolic-eclair-b6f8f1\.netlify\.app\//);
