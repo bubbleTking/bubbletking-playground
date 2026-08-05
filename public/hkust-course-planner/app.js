@@ -28,7 +28,7 @@ const els = {
   source: byId("sourceNote"), list: byId("courseList"), selected: byId("selectedList"),
   hint: byId("selectedHint"), calendar: byId("calendar"), alerts: byId("alerts"),
   credits: byId("creditTotal"), sections: byId("sectionTotal"), clear: byId("clearButton"),
-  optimizePlan: byId("optimizePlanButton"), modeControl: byId("modeControl"),
+  exportPlan: byId("exportButton"), optimizePlan: byId("optimizePlanButton"), modeControl: byId("modeControl"),
   modeDescription: byId("modeDescription"), subtitle: byId("termSubtitle"),
   historyButton: byId("historyButton"), historyCount: byId("historyCount"),
   dialog: byId("historyDialog"), historyInput: byId("historyInput"), historyResult: byId("historyResult"),
@@ -62,6 +62,7 @@ function wireEvents() {
     saveSelection();
     render();
   });
+  els.exportPlan.addEventListener("click", exportClassNumbers);
   els.optimizePlan.addEventListener("click", optimizeWholePlan);
   els.modeControl.addEventListener("click", (event) => {
     const button = event.target.closest("button[data-mode]");
@@ -291,7 +292,18 @@ function renderSelected() {
       <div class="selectedCourseHeader"><div><strong>${escapeHtml(code)}</strong><span>${course.credits || 0} cr</span></div><div class="selectedMeta">${escapeHtml(course.title)}</div></div>
       <div class="selectedSections">${sections.map((section) => {
         const quota = quotaSummary(section);
-        return `<div class="selectedSectionLine"><span>${escapeHtml(componentLabel(componentType(section)))}</span><strong>${escapeHtml(section.section)}</strong><small>${escapeHtml(timeSummary(section))}</small><em class="${section.avail <= 0 ? "fullText" : "openText"}">${escapeHtml(quota.primary)}</em></div>`;
+        const component = componentType(section);
+        const options = course.sections.filter((candidate) => componentType(candidate) === component).map((candidate) => {
+          const candidateQuota = quotaSummary(candidate);
+          const label = `${sectionWithClassNumber(candidate)} | ${candidateQuota.primary} | ${timeSummary(candidate)}`;
+          return `<option value="${escapeHtml(candidate.id)}" ${candidate.id === section.id ? "selected" : ""}>${escapeHtml(label)}</option>`;
+        }).join("");
+        return `<div class="selectedSectionLine">
+          <span>${escapeHtml(componentLabel(component))}</span>
+          <select data-course-code="${escapeHtml(code)}" aria-label="Change ${escapeHtml(componentLabel(component))} section for ${escapeHtml(code)}" onchange="handleSelectedSectionChange(this)">${options}</select>
+          <small>${escapeHtml(timeSummary(section))}</small>
+          <em class="${section.avail <= 0 ? "fullText" : "openText"}">${escapeHtml(sectionWithClassNumber(section))} &middot; ${escapeHtml(quota.primary)}</em>
+        </div>`;
       }).join("")}</div>
       ${eligibility.message ? `<div class="bundleWarning ${eligibility.level}">${escapeHtml(eligibility.message)}</div>` : ""}
       ${rating && isBadGrade(rating.grade) ? `<div class="bundleWarning danger">USTspace grading rating is ${escapeHtml(rating.grade)}${rating.review_count ? ` from ${rating.review_count} reviews` : ""}.</div>` : ""}
@@ -311,6 +323,49 @@ function handlePlannedButtonClick(button) {
   const course = allCourses.find((item) => item.code === button.dataset.courseCode);
   if (button.dataset.action === "optimize" && course) addCourseBundle(course);
   if (button.dataset.action === "remove-course") removeCourse(button.dataset.courseCode);
+}
+
+function handleSelectedSectionChange(select) {
+  const course = allCourses.find((item) => item.code === select.dataset.courseCode);
+  const section = course?.sections.find((item) => item.id === select.value);
+  if (!course || !section) return;
+  const solution = findBestBundle(course, section);
+  if (!solution.length) {
+    planNotice = `No valid bundle was found for ${course.code} ${section.section}.`;
+    render();
+    return;
+  }
+  selected = selected.filter((item) => item.courseCode !== course.code);
+  selected.push(...solution.map((item) => ({ id: item.id, courseCode: course.code })));
+  saveSelection();
+  const bundle = solution.map(sectionWithClassNumber).join(" + ");
+  planNotice = `Changed ${course.code} to ${bundle}. Required tutorial or lab sections were matched automatically.`;
+  render();
+}
+
+function exportClassNumbers() {
+  const enriched = selected.map(resolveSelected).filter(Boolean);
+  const courseCodes = [...new Set(enriched.map(({ course }) => course.code))];
+  if (!courseCodes.length) {
+    planNotice = "Add courses before exporting class numbers.";
+    renderAlerts(currentConflicts());
+    return;
+  }
+  const termName = currentPayload?.term || currentTerm;
+  const lines = courseCodes.map((code) => {
+    const sections = enriched.filter(({ course }) => course.code === code).map(({ section }) => sectionWithClassNumber(section));
+    return `${code}: ${sections.join(", ")}`;
+  });
+  const output = [`HKUST Course Planner - ${termName}`, "", ...lines].join("\n");
+  const blob = new Blob([output], { type: "text/plain;charset=utf-8" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = `hkust-class-numbers-${currentTerm}.txt`;
+  link.click();
+  URL.revokeObjectURL(link.href);
+  navigator.clipboard?.writeText(output).catch(() => {});
+  planNotice = `Exported ${courseCodes.length} courses with their class numbers. The list was also copied when browser permission allowed.`;
+  renderAlerts(currentConflicts());
 }
 
 function addCourseBundle(course, preferredSection = null, quiet = false) {
@@ -580,6 +635,7 @@ function normalizeSearch(value) { return String(value || "").toLowerCase().repla
 function levelOf(number) { const first = String(number || "")[0]; return Number(first) >= 6 ? "6" : first; }
 function sectionType(name) { return /^L\d/i.test(name) ? "lecture" : "tutorial"; }
 function timeSummary(section) { return section.meetings?.length ? section.meetings.map(formatRange).join("; ") : "No weekly meeting time"; }
+function sectionWithClassNumber(section) { return `${section.section}${section.class_number ? ` (${section.class_number})` : ""}`; }
 function formatRange(meeting) { return `${meeting.day} ${formatTime(meeting.start)}-${formatTime(meeting.end)}`; }
 function formatTime(minutes) { return `${String(Math.floor(minutes / 60)).padStart(2, "0")}:${String(minutes % 60).padStart(2, "0")}`; }
 function findConflicts(meetings) { const conflicts = []; for (let i = 0; i < meetings.length; i += 1) for (let j = i + 1; j < meetings.length; j += 1) { const a = meetings[i], b = meetings[j]; if (a.section.id !== b.section.id && a.meeting.day === b.meeting.day && a.meeting.start < b.meeting.end && b.meeting.start < a.meeting.end) conflicts.push({ day: a.meeting.day, ids: [a.section.id, b.section.id], labels: [`${a.course.code} ${a.section.section}`, `${b.course.code} ${b.section.section}`] }); } return conflicts; }

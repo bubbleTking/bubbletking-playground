@@ -62,7 +62,14 @@ test("build emits a Sites worker", async () => {
     "utf8"
   );
   assert.match(planner, /HKUST Course Planner/);
+  assert.match(planner, /Export class numbers/);
   assert.doesNotMatch(planner, /courses-data\.js/);
+  const plannerApp = await readFile(
+    resolve(import.meta.dirname, "..", "dist", "static", "hkust-course-planner", "app.js"),
+    "utf8"
+  );
+  assert.match(plannerApp, /handleSelectedSectionChange/);
+  assert.match(plannerApp, /class_number/);
   const terms = await readFile(
     resolve(import.meta.dirname, "..", "dist", "static", "hkust-course-planner", "data", "terms-data.js"),
     "utf8"
